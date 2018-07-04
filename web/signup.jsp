@@ -79,7 +79,7 @@
                                 <option value="4">User Department</option>
                             </select>
                             <label>Select User Role</label>
-                        </div
+                        </div>
                         <div class="row">
                             <div class="input-field col s12">
                                 <button class="btn col s12 waves-effect waves-light orange" type="submit" name="action">Sign Up</button>

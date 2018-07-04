@@ -14,17 +14,6 @@
     response.setHeader("Cache-Control", "no-cache, no-store");
     response.setHeader("Pragma", "no-cache");
     response.setHeader("Expires", "0");
-
-    Cookie[] cookies = request.getCookies();
-    if (cookies != null) {
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("userdpt")) {
-                if (session.getAttribute("userdpt") == null) {
-                    response.sendRedirect("login.jsp");
-                }
-            }
-        }
-    }
 %>
 <main id="maindash">
     <jsp:include page="./includes/dptdashnav.jsp" />

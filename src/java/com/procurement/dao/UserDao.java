@@ -41,15 +41,13 @@ public class UserDao {
 
             if (count == 1) {
 
-                if (authen.validatePassword(password, passwordDB) && roleDB.equals("0")) {
-                    return "admin";
-                } else if (authen.validatePassword(password, passwordDB) && roleDB.equals("1")) {
+                if (authen.validatePassword(password, passwordDB) && roleDB.equals("Manager")) {
                     return "manager";
-                } else if (authen.validatePassword(password, passwordDB) && roleDB.equals("2")) {
+                } else if (authen.validatePassword(password, passwordDB) && roleDB.equals("CommitteeMemeber")) {
                     return "committee";
-                } else if (authen.validatePassword(password, passwordDB) && roleDB.equals("3")) {
+                } else if (authen.validatePassword(password, passwordDB) && roleDB.equals("Supplier")) {
                     return "supplier";
-                } else if (authen.validatePassword(password, passwordDB) && roleDB.equals("4")) {
+                } else if (authen.validatePassword(password, passwordDB) && roleDB.equals("UserDepartment")) {
                     return "userdpt";
                 }
             }

@@ -8,6 +8,7 @@
             $('div[id^=sidenav-overlay]').remove();
         });
         
+        $('.modal').modal({dismissible: false});
         $('select').material_select();
         $('.collapsible').collapsible();
         $('.parallax').parallax();

@@ -110,3 +110,28 @@ ul.side-nav .collapsible-header.active::after {
 #coll_stats{
     width: 98%;
 }
+
+#butt_stats{
+    margin-top: 8px;
+    margin-right: 9px;
+}
+
+.modal { 
+    margin-left: 240px;
+    max-height: 100%;
+    width: 75% !important; 
+    height: 87% !important; 
+}
+
+#modal1 { 
+    margin-left: 240px;
+    margin-top: -20px;
+    max-height: 100%;
+    width: 75% !important; 
+    height: 89% !important; 
+}
+
+#table_stats{
+    width: 98%;
+    margin-top: 8px;
+}
