@@ -85,6 +85,14 @@
                     return false;
                 }
             }
+            
+            function ConfirmSubmit(){
+		var x=confirm("Are you sure you want to Approve This Requisition?");
+		if(x)
+                    return true;
+		else
+                    return false;
+            }
         </script>
     </body>
 </html>

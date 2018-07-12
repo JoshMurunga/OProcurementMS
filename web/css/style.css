@@ -131,7 +131,36 @@ ul.side-nav .collapsible-header.active::after {
     height: 89% !important; 
 }
 
+#modal2 { 
+    margin-left: 240px;
+    width: 64% !important; 
+    height: 77% !important; 
+}
+
+#modal3 { 
+    margin-left: auto;
+    margin-right: auto;
+    width: 64% !important; 
+    height: 77% !important; 
+}
+
 #table_stats{
     width: 98%;
     margin-top: 8px;
+}
+
+::-webkit-input-placeholder {
+    color: #9e9e9e;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+    color: #9e9e9e;  
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+    color: #9e9e9e;  
+}
+
+:-ms-input-placeholder {  
+   color: #9e9e9e;  
 }

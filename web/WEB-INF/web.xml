@@ -36,6 +36,14 @@
         <servlet-name>dptrequisitions</servlet-name>
         <servlet-class>com.procurement.controller.dptrequisitions</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>download</servlet-name>
+        <servlet-class>com.procurement.controller.download</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SupplierServlet</servlet-name>
+        <servlet-class>com.procurement.controller.SupplierServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>DBConnection</servlet-name>
         <url-pattern>/DBConnection</url-pattern>
@@ -64,6 +72,10 @@
         <servlet-name>RequisitionDao</servlet-name>
         <url-pattern>/RequisitionDao</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>download</servlet-name>
+        <url-pattern>/download</url-pattern>
+    </servlet-mapping>
     <filter>
         <filter-name>ManagerFilter</filter-name>
         <filter-class>com.procurement.controller.ManagerFilter</filter-class>
@@ -72,25 +84,36 @@
         <filter-name>UserDepartmentFilter</filter-name>
         <filter-class>com.procurement.controller.UserDepartmentFilter</filter-class>
     </filter>
+    <filter>
+        <filter-name>SupplierFilter</filter-name>
+        <filter-class>com.procurement.controller.SupplierFilter</filter-class>
+    </filter>
+    <filter>
+        <filter-name>CommitteeMemberFilter</filter-name>
+        <filter-class>com.procurement.controller.CommitteeMemberFilter</filter-class>
+    </filter>
     <filter-mapping>
         <filter-name>ManagerFilter</filter-name>
         <url-pattern>/mandash.jsp</url-pattern>
         <url-pattern>/users.jsp</url-pattern>
         <url-pattern>/requisitions.jsp</url-pattern>
+        <url-pattern>/tenders.jsp</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>UserDepartmentFilter</filter-name>
         <url-pattern>/dptdash.jsp</url-pattern>
         <url-pattern>/dptrequisitions.jsp</url-pattern>
     </filter-mapping>
-    <servlet-mapping>
-        <servlet-name>users</servlet-name>
-        <url-pattern>/users</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>dptrequisitions</servlet-name>
-        <url-pattern>/dptrequisitions</url-pattern>
-    </servlet-mapping>
+    <filter-mapping>
+        <filter-name>SupplierFilter</filter-name>
+        <url-pattern>/supdash.jsp</url-pattern>
+        <url-pattern>/bidding.jsp</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>CommitteeMemberFilter</filter-name>
+        <url-pattern>/comdash.jsp</url-pattern>
+        <url-pattern>/evaluation.jsp</url-pattern>
+    </filter-mapping>
     <session-config>
         <session-timeout>
             30

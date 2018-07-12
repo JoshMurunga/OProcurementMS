@@ -7,7 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c"%>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/sql" prefix = "sql"%>
-<% String title = "User Department";%>
+<% String title = "Requisitions";%>
 <jsp:include page="./includes/header.jsp"><jsp:param name="title" value="<%= title%>"/></jsp:include>
 <jsp:include page="./includes/dashnav.jsp" />
 <%
@@ -28,15 +28,15 @@
             <thead>
                 <tr>
                     <th>Item</th>
-                    <th>Units</th>
-                    <th>Rate</th>
-                    <th>Qty</th>
-                    <th>Total Price</th>
+                    <th>Measure Units</th>
+                    <th>Rate(Ksh)</th>
+                    <th>Quantity</th>
+                    <th>Total Price(Ksh)</th>
                     <th>Category</th>
                     <th>Supplier</th>
-                    <th>Description</th>
-                    <th>Status</th>
-                    <th>Action</th>
+                    <th>Description File</th>
+                    <th></th>
+                    <th></th>
                 </tr>
             </thead>
 
@@ -50,9 +50,9 @@
                         <td><c:out value = "${row.totalprice}"/></td>
                         <td><c:out value = "${row.category}"/></td>
                         <td><c:out value = "${row.supplier}"/></td>
-                        <td><c:out value = "${row.description}"/></td>
-                        <td><c:out value = "${row.status}"/></td>
-                        <td></td>
+                        <td><a class="btn orange waves-effect waves-teal" href="download?source=requisition&id=${row.requisitionid}" >Download</a></td>
+                        <td><a class="btn green waves-effect waves-teal" href="<%=response.encodeURL("tenders.jsp")%>" onclick="return ConfirmSubmit()">Approve</a></td>
+                        <td><a class="btn red">Decline</a></td>
                     </tr>
                 </c:forEach>
             </tbody>

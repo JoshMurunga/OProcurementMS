@@ -6,7 +6,6 @@
 package com.procurement.dao;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import com.util.database.DBConnection;
@@ -23,6 +22,7 @@ public class RequisitionDao {
         String totalprice = reqBean.getTotalPrice();
         String supplier = reqBean.getSupplier();
         String userid = reqBean.getUserId();
+        String description = reqBean.getDescription();
 
         Connection conn = null;
         Statement statement = null;
@@ -31,8 +31,8 @@ public class RequisitionDao {
             conn = DBConnection.createConnection();
             statement = conn.createStatement();
 
-            statement.executeUpdate("INSERT INTO requisitions (item,units,priceperunit,quantity,totalprice,category,supplier,userid)"
-                    + " VALUES ('" + item + "','" + units + "','" + unitprice + "','" + quantity + "','" + totalprice + "','" + category + "','" + supplier + "','"+ userid +"')");
+            statement.executeUpdate("INSERT INTO requisitions (item,units,priceperunit,quantity,totalprice,category,supplier,userid,description)"
+                    + " VALUES ('" + item + "','" + units + "','" + unitprice + "','" + quantity + "','" + totalprice + "','" + category + "','" + supplier + "','"+ userid +"','"+ description +"')");
 
         } catch (SQLException e) {
             e.printStackTrace();

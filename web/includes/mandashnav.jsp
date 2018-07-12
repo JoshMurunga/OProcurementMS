@@ -25,11 +25,11 @@
             </div>
         </li>
         <li id="dash_module">
-            <div id="dash_module_header" class="collapsible-header waves-effect waves-teal teal-text"><i class="material-icons teal-text">add_shopping_cart</i><b>Tenders</b></div>
+            <div id="dash_module_header" class="collapsible-header waves-effect waves-teal teal-text"><i class="material-icons teal-text">shopping_cart</i><b>Tenders</b></div>
             <div id="dash_module_body" class="collapsible-body">
                 <ul>
                     <li id="module_supplier">
-                        <a class="waves-effect waves-teal" style="text-decoration: none;" href="<%=response.encodeURL("requisitions.jsp")%>">Manage Requisitions</a>
+                        <a class="waves-effect waves-teal" style="text-decoration: none;" href="<%=response.encodeURL("tenders.jsp")%>">Manage Tenders</a>
                     </li>
 
                     <li id="module_employee">
@@ -39,11 +39,11 @@
             </div>
         </li>
         <li id="dash_module">
-            <div id="dash_module_header" class="collapsible-header waves-effect waves-teal teal-text"><i class="material-icons teal-text">add_shopping_cart</i><b>Tender Bids</b></div>
+            <div id="dash_module_header" class="collapsible-header waves-effect waves-teal teal-text"><i class="material-icons teal-text">style</i><b>Tender Bids</b></div>
             <div id="dash_module_body" class="collapsible-body">
                 <ul>
                     <li id="module_supplier">
-                        <a class="waves-effect waves-teal" style="text-decoration: none;" href="<%=response.encodeURL("requisitions.jsp")%>">Manage Requisitions</a>
+                        <a class="waves-effect waves-teal" style="text-decoration: none;" href="<%=response.encodeURL("bids.jsp")%>">Manage Bids</a>
                     </li>
 
                     <li id="module_employee">
@@ -53,11 +53,11 @@
             </div>
         </li>
         <li id="dash_module">
-            <div id="dash_module_header" class="collapsible-header waves-effect waves-teal teal-text"><i class="material-icons teal-text">add_shopping_cart</i><b>Evaluation Committee</b></div>
+            <div id="dash_module_header" class="collapsible-header waves-effect waves-teal teal-text"><i class="material-icons teal-text">person_outline</i><b>Evaluation Committee</b></div>
             <div id="dash_module_body" class="collapsible-body">
                 <ul>
                     <li id="module_supplier">
-                        <a class="waves-effect waves-teal" style="text-decoration: none;" href="<%=response.encodeURL("requisitions.jsp")%>">Manage Requisitions</a>
+                        <a class="waves-effect waves-teal" style="text-decoration: none;" href="<%=response.encodeURL("addevcomm.jsp")%>">Add Committee Member</a>
                     </li>
 
                     <li id="module_employee">
@@ -77,21 +77,18 @@
             </div>
         </li>
         <%
-            String user = null;
-            if (!(session.getAttribute("admin") == null)) {
-                user = (String) session.getAttribute("admin");
-            } else if (!(session.getAttribute("manager") == null)) {
-                user = (String) session.getAttribute("manager");
-            } else if (!(session.getAttribute("committee") == null)) {
-                user = (String) session.getAttribute("committee");
-            } else if (!(session.getAttribute("supplier") == null)) {
-                user = (String) session.getAttribute("supplier");
-            } else if (!(session.getAttribute("userdpt") == null)) {
-                user = (String) session.getAttribute("userdpt");
+            String userName = null;
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if (cookie.getName().equals("LOGIN_USER")) {
+                        userName = cookie.getValue();
+                    }
+                }
             }
         %>
         <li id="dash_profile" class="hide-on-large-only">
-            <div id="dash_profile_header" class="collapsible-header waves-effect waves-teal teal-text"><i class="material-icons teal-text">account_circle</i><b><%=user%></b></div>
+            <div id="dash_profile_header" class="collapsible-header waves-effect waves-teal teal-text"><i class="material-icons teal-text">account_circle</i><b><%=userName %></b></div>
             <div id="dash_profile_body" class="collapsible-body">
                 <ul>
                     <li id="profile_profile">

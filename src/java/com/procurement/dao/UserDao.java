@@ -43,7 +43,7 @@ public class UserDao {
 
                 if (authen.validatePassword(password, passwordDB) && roleDB.equals("Manager")) {
                     return "manager";
-                } else if (authen.validatePassword(password, passwordDB) && roleDB.equals("CommitteeMemeber")) {
+                } else if (authen.validatePassword(password, passwordDB) && roleDB.equals("CommitteeMember")) {
                     return "committee";
                 } else if (authen.validatePassword(password, passwordDB) && roleDB.equals("Supplier")) {
                     return "supplier";

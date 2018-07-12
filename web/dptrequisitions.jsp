@@ -69,7 +69,7 @@
         <div class="modal-content">
             <h5>Fill in form to add new requisition</h5>
             <div class="row">
-                <form class="col s12" method="POST" action="<%=response.encodeURL("ControllerServlet")%>" id="editinfo" name="editinfo">
+                <form class="col s12" method="POST" action="<%=response.encodeURL("ControllerServlet")%>" id="editinfo" name="editinfo" enctype="multipart/form-data">
                     <div class="row">
                         <div class="input-field col s6">
                             <input id="item" name="item" type="text" class="validate" required>
@@ -108,7 +108,7 @@
                             <label for="supplier">Supplier</label>
                         </div>
                         <div class="file-field input-field col s6">
-                            <div class="btn red"><span>Add File</span><input type="file"></div>
+                            <div class="btn red"><span>Add Description File</span><input type="file" name="description"></div>
                             <div class="file-path-wrapper">
                                 <input class="file-path validate" name="description" type="text" placeholder="Upload description file">
                             </div>
@@ -157,9 +157,9 @@
                         <td><c:out value = "${row.totalprice}"/></td>
                         <td><c:out value = "${row.category}"/></td>
                         <td><c:out value = "${row.supplier}"/></td>
-                        <td><c:out value = "${row.contact}"/></td>
-                        <td><c:out value = "${row.contact}"/></td>
-                        <td><c:out value = "${row.contact}"/></td>
+                        <td><a class="btn waves-effect waves-teal" href="download?source=requisition&id=${row.requisitionid}" >Download file</a></td>
+                        <td></td>
+                        <td></td>
                     </tr>
                 </c:forEach>
             </tbody>

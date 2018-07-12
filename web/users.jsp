@@ -7,7 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c"%>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/sql" prefix = "sql"%>
-<% String title = "User Department";%>
+<% String title = "User Module";%>
 <jsp:include page="./includes/header.jsp"><jsp:param name="title" value="<%= title%>"/></jsp:include>
 <jsp:include page="./includes/dashnav.jsp" />
 <%
@@ -73,8 +73,8 @@
                         <div class="input-field col s6">
                             <select name="role" >
                                 <option value="" disabled selected>Role</option>
-                                <option value="2">Committee Member</option>
-                                <option value="4">User Department</option>
+                                <option value="CommitteeMember">Committee Member</option>
+                                <option value="UserDepartment">User Department</option>
                             </select>
                             <label>Select User Role</label>
                         </div>
