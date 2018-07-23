@@ -19,6 +19,8 @@ public class CompanyBean implements Serializable {
     private String location;
     private String address;
     private String userid;
+    private String pincertificate;
+    
 
     public CompanyBean() {
         companyname = "";
@@ -27,15 +29,17 @@ public class CompanyBean implements Serializable {
         location = "";
         address = "";
         userid = "";
+        pincertificate = "";
     }
     
-    public CompanyBean(String companyname, String email, String contact, String location, String address, String userid){
+    public CompanyBean(String companyname, String email, String contact, String location, String address, String userid, String pincertificate){
         this.companyname = companyname;
         this.email = email;
         this.contact = contact;
         this.location = location;
         this.address = address;
         this.userid = userid;
+        this.pincertificate = pincertificate;
     }
     
     public void setCompanyName(String companyname) {
@@ -84,5 +88,13 @@ public class CompanyBean implements Serializable {
 
     public String getUserId() {
         return userid;
+    }
+
+    public void setPinCertificate(String pincertificate) {
+        this.pincertificate = pincertificate;
+    }
+
+    public String getPinCertificate() {
+        return pincertificate;
     }
 }

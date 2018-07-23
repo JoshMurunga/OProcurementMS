@@ -11,15 +11,15 @@
 
     <ul id="accordion" class="collapsible" data-collapsible="accordion">
         <li id="dash_module">
-            <div id="dash_module_header" class="collapsible-header waves-effect waves-teal teal-text"><i class="material-icons teal-text">add_shopping_cart</i><b>Requisitions</b></div>
+            <div id="dash_module_header" class="collapsible-header waves-effect waves-teal teal-text"><i class="material-icons teal-text">style</i><b>Bidding</b></div>
             <div id="dash_module_body" class="collapsible-body">
                 <ul>
                     <li id="module_supplier">
-                        <a class="waves-effect waves-teal" style="text-decoration: none;" href="#">Manage Requisitions</a>
+                        <a class="waves-effect waves-teal" style="text-decoration: none;" href="#">Submit Bid</a>
                     </li>
 
                     <li id="module_employee">
-                        <a class="waves-effect waves-teal" style="text-decoration: none;" href="#">Delivered Requisitions</a>
+                        <a class="waves-effect waves-teal" style="text-decoration: none;" href="#">Tender Bid Outcome</a>
                     </li>
                 </ul>
             </div>

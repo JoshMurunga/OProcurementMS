@@ -164,11 +164,12 @@ public class download extends HttpServlet {
                         out.flush();
 
                     }
+                    
                 } else if (source2.equals("pin")) {
 
                     conn = DBConnection.createConnection();
                     statement = conn.createStatement();
-                    resultSet = statement.executeQuery("SELECT pincertificate FROM bids WHERE bidid='" + id + "'");
+                    resultSet = statement.executeQuery("SELECT pincertificate FROM company WHERE companyid='" + id + "'");
 
                     while (resultSet.next()) {
                         path = resultSet.getString("pincertificate");

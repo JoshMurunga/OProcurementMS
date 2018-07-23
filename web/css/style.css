@@ -162,5 +162,10 @@ ul.side-nav .collapsible-header.active::after {
 }
 
 :-ms-input-placeholder {  
-   color: #9e9e9e;  
+    color: #9e9e9e;  
+}
+
+#toast-container {
+    top: 100px !important;
+    right: 500px !important;
 }

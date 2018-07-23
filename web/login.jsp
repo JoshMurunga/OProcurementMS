@@ -18,7 +18,13 @@
                 <div class="container">
                     <div class="row z-depth-2" style="padding: 32px 30px 0px 30px; border: 1px solid #EEE;">
                         <form class="col s12" name="login" method="post" action="<%=request.getContextPath()%>/ControllerServlet">
-                            <b><span style="color:red"><%=(request.getAttribute("errMessage") == null) ? "" : request.getAttribute("errMessage")%></span></b>
+                            <% String message = (String) request.getAttribute("errMessage");
+                                if (message == null) {
+                                    message = "";
+                                } else {
+                            %>
+                            <script type="text/javascript"> Materialize.toast("<%=message%>", 4000);</script>
+                            <% } %>
                             <div class="row">
                                 <div class="input-field col s12">
                                     <i class="material-icons prefix">account_circle</i>

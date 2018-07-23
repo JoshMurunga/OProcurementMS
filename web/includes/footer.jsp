@@ -10,9 +10,7 @@
             </div>
 
         </footer>        
-        <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
-        <script type="text/javascript" src="js/materialize.min.js"></script>
-        <script type="text/javascript" src="js/init.js"></script>
+        
         <script type="text/javascript">
             function validateform() {
                 var firstname = document.register.firstname.value;

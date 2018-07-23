@@ -23,7 +23,6 @@
         $('select').material_select();
         $('.collapsible').collapsible();
         $('.parallax').parallax();
-        $('.tooltipped').tooltip({delay: 50});
 
         var url = window.location;
         $('ul.nav a[href="' + url + '"]').parent().addClass('active');

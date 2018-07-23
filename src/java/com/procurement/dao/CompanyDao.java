@@ -24,6 +24,7 @@ public class CompanyDao {
         String location = comBean.getLocation();
         String address = comBean.getAddress();
         String userid = comBean.getUserId();
+        String pincertificate = comBean.getPinCertificate();
         
         Connection conn = null;
         Statement statement = null;
@@ -32,8 +33,8 @@ public class CompanyDao {
             conn = DBConnection.createConnection();
             statement = conn.createStatement();
 
-            statement.executeUpdate("INSERT INTO company (companyname,contact,email,postaladdress,location,userid)"
-                    + " VALUES ('" + companyname + "','" + contact + "','" + email + "','" + address + "','" + location + "','" + userid + "')");
+            statement.executeUpdate("INSERT INTO company (companyname,contact,email,postaladdress,location,userid,pincertificate)"
+                    + " VALUES ('" + companyname + "','" + contact + "','" + email + "','" + address + "','" + location + "','" + userid + "','" + pincertificate + "')");
 
         } catch (SQLException e) {
             e.printStackTrace();

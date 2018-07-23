@@ -37,6 +37,7 @@ public class ControllerServlet extends HttpServlet {
     private static final String REQ_DIR = "Requisitions";
     private static final String TEN_DIR = "Tenders";
     private static final String BID_DIR = "BidDocs";
+    private static final String COM_DIR = "CompanyDocs";
 
     public ControllerServlet() {
 
@@ -259,6 +260,14 @@ public class ControllerServlet extends HttpServlet {
                 String address = req.getParameter("address");
                 String userid = req.getParameter("userid");
                 
+                String savePath = "E:\\PROGRAMMING\\NetBeansProjects\\OProcurementMS\\web\\WEB-INF" + File.separator + COM_DIR;
+                File fileSaveDir = new File(savePath);
+                
+                Part partPin = req.getPart("pincertificate");
+                String filePin = extractFileName(partPin);
+                partPin.write(savePath + File.separator + filePin);
+                String pincertificate = savePath + File.separator + filePin;
+                
                 CompanyBean com = new CompanyBean();
                 
                 com.setCompanyName(companyname);
@@ -267,6 +276,7 @@ public class ControllerServlet extends HttpServlet {
                 com.setLocation(location);
                 com.setAddress(address);
                 com.setUserId(userid);
+                com.setPinCertificate(pincertificate);
                 
                 CompanyDao comDao = new CompanyDao();
                 
@@ -288,11 +298,6 @@ public class ControllerServlet extends HttpServlet {
                 partTax.write(savePath + File.separator + fileTax);
                 String taxcompliance = savePath + File.separator + fileTax;
                 
-                Part partPin = req.getPart("pincertificate");
-                String filePin = extractFileName(partPin);
-                partPin.write(savePath + File.separator + filePin);
-                String pincertificate = savePath + File.separator + filePin;
-                
                 Part partFin = req.getPart("financialhistory");
                 String fileFin = extractFileName(partFin);
                 partFin.write(savePath + File.separator + fileFin);
@@ -305,7 +310,6 @@ public class ControllerServlet extends HttpServlet {
                 
                 BidBean bid = new BidBean();
                 bid.setTaxCompliance(taxcompliance);
-                bid.setPinCertificate(pincertificate);
                 bid.setFinancialHistory(financialhistory);
                 bid.setTechSpecs(techspecs);
                 bid.setBidPrice(bidprice);

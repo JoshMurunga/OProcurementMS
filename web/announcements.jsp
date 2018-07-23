@@ -19,6 +19,7 @@
     <sql:query  dataSource = "${tenders}" var = "result">
         SELECT * FROM tenders;
     </sql:query>
+    <center><div class="teal-text" style="font-size: 30; margin-top: 8px"><b>TENDER ANNOUNCEMENTS</b></div></center>
     <div id="table_stats" class="container z-depth-2">
         <table class="striped">
             <thead>

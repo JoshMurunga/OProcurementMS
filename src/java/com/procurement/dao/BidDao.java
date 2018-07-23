@@ -15,7 +15,6 @@ public class BidDao {
 
     public String addBid(BidBean bidBean) {
         String taxcompliance = bidBean.getTaxCompliance();
-        String pincertificate = bidBean.getPinCertificate();
         String financialhistory = bidBean.getFinancialHistory();
         String techspecs = bidBean.getTechSpecs();
         String bidprice = bidBean.getBidPrice();
@@ -29,8 +28,8 @@ public class BidDao {
             conn = DBConnection.createConnection();
             statement = conn.createStatement();
 
-            statement.executeUpdate("INSERT INTO bids (taxcompliance,pincertificate,financialhistory,techspec,bidprice,companyid,tenderid)"
-                    + " VALUES ('" + taxcompliance + "','" + pincertificate + "','" + financialhistory + "','" + techspecs + "','" + bidprice + "','" + companyid + "','" + tenderid + "')");
+            statement.executeUpdate("INSERT INTO bids (taxcompliance,financialhistory,techspec,bidprice,companyid,tenderid)"
+                    + " VALUES ('" + taxcompliance + "','" + financialhistory + "','" + techspecs + "','" + bidprice + "','" + companyid + "','" + tenderid + "')");
 
         } catch (SQLException e) {
             e.printStackTrace();

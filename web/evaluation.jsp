@@ -25,40 +25,9 @@
                        url = "jdbc:postgresql://localhost:5432/opms"
                        user = "postgres"  password = "1234"/>
     <sql:query  dataSource = "${bids}" var = "result">
-        SELECT * FROM bids;
+        SELECT company.companyname, bids.bidid, bids.bidprice, bids.techspec, bids.taxcompliance, company.companyid, company.pincertificate, bids.financialhistory FROM company INNER JOIN bids ON company.companyid=bids.companyid;
     </sql:query>
     <%
-        String companyid = 
-        String driverName = "org.postgresql.Driver";
-        String connectionUrl = "jdbc:postgresql://localhost:5432/";
-        String dbName = "opms";
-        String userId = "postgres";
-        String password = "1234";
-
-        try {
-            Class.forName(driverName);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        Connection connection = null;
-        Statement statement = null;
-        ResultSet resultSet = null;
-
-        try {
-            connection = DriverManager.getConnection(
-                    connectionUrl + dbName, userId, password);
-            statement = connection.createStatement();
-            String sql = "SELECT companyname FROM company WHERE companyid=";
-
-            resultSet = statement.executeQuery(sql);
-            while (resultSet.next()) {
-                hiddenid = resultSet.getString("userid");
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     %>
     <div id="table_stats" class="container z-depth-2">
         <table class="striped">
@@ -69,7 +38,7 @@
                     <th>Technical Specs</th>
                     <th>Tax Compliance</th>
                     <th>Pin Certificate</th>
-                    <th>FInancial History</th>
+                    <th>Financial History</th>
                     <th></th>
                 </tr>
             </thead>
@@ -77,11 +46,11 @@
             <tbody>
                 <c:forEach var = "row" items = "${result.rows}">
                     <tr>
-                        <td><c:out value = "${row.companyid}"/></td>
+                        <td><c:out value = "${row.companyname}"/></td>
                         <td><c:out value = "${row.bidprice}"/></td>
                         <td><a class="btn waves-effect waves-teal" href="download?source=bid&source2=tech&id=${row.bidid}" >Download file</a></td>
                         <td><a class="btn waves-effect waves-teal" href="download?source=bid&source2=tax&id=${row.bidid}" >Download file</a></td>
-                        <td><a class="btn waves-effect waves-teal" href="download?source=bid&source2=pin&id=${row.bidid}" >Download file</a></td>
+                        <td><a class="btn waves-effect waves-teal" href="download?source=bid&source2=pin&id=${row.companyid}" >Download file</a></td>
                         <td><a class="btn waves-effect waves-teal" href="download?source=bid&source2=fin&id=${row.bidid}" >Download file</a></td>
                         <td><a class="btn red">Evaluate</a></td>
                     </tr>

@@ -51,14 +51,6 @@
                     </div>
                     <div class="row">
                         <div class="file-field input-field col s12">
-                            <div class="btn orange"><span>Add File</span><input type="file" name="pincertificate"></div>
-                            <div class="file-path-wrapper">
-                                <input class="file-path validate" name="pincertificate" type="text" placeholder="Upload Pin Certificate Documents">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="file-field input-field col s12">
                             <div class="btn orange"><span>Add File</span><input type="file" name="financialhistory"></div>
                             <div class="file-path-wrapper">
                                 <input class="file-path validate" name="financialhistory" type="text" placeholder="Upload Financial History Documents">

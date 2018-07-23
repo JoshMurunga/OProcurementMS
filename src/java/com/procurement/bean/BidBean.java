@@ -14,7 +14,6 @@ import java.io.Serializable;
 public class BidBean implements Serializable {
 
     private String taxcompliance;
-    private String pincertificate;
     private String financialhistory;
     private String techspecs;
     private String bidprice;
@@ -23,7 +22,6 @@ public class BidBean implements Serializable {
 
     public BidBean() {
         taxcompliance = "";
-        pincertificate = "";
         financialhistory = "";
         techspecs = "";
         bidprice = "";
@@ -31,9 +29,8 @@ public class BidBean implements Serializable {
         tenderid = "";
     }
     
-    public BidBean(String taxcompliance, String pincertificate, String financialhistory, String techspecs, String bidprice, String companyid, String tenderid){
+    public BidBean(String taxcompliance, String financialhistory, String techspecs, String bidprice, String companyid, String tenderid){
         this.taxcompliance = taxcompliance;
-        this.pincertificate = pincertificate;
         this.financialhistory = financialhistory;
         this.techspecs = techspecs;
         this.bidprice = bidprice;
@@ -47,14 +44,6 @@ public class BidBean implements Serializable {
 
     public String getTaxCompliance() {
         return taxcompliance;
-    }
-
-    public void setPinCertificate(String pincertificate) {
-        this.pincertificate = pincertificate;
-    }
-
-    public String getPinCertificate() {
-        return pincertificate;
     }
     
     public void setFinancialHistory(String financialhistory) {
