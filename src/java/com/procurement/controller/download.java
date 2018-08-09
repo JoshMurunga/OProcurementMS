@@ -227,8 +227,13 @@ public class download extends HttpServlet {
 
                     }
                     
-                }
+                } 
 
+            } else if(source.equals("evaluator")){
+                String tenderid = request.getParameter("tenderid");
+                String userid = request.getParameter("userid");
+                System.out.println(tenderid);
+                System.out.println(userid);
             }
 
         } catch (SQLException e) {

@@ -24,7 +24,7 @@
         SELECT * FROM requisitions;
     </sql:query>
     <div id="table_stats" class="container z-depth-2">
-        <table class="striped">
+        <table class="striped" id="example">
             <thead>
                 <tr>
                     <th>Item</th>

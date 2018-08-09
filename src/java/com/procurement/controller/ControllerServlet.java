@@ -6,7 +6,9 @@
 package com.procurement.controller;
 
 import com.procurement.bean.BidBean;
+import com.procurement.bean.CommitteeBean;
 import com.procurement.bean.CompanyBean;
+import com.procurement.bean.EvaluationBean;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -16,11 +18,14 @@ import com.procurement.bean.UserBean;
 import com.procurement.bean.RequisitionBean;
 import com.procurement.bean.TenderBean;
 import com.procurement.dao.BidDao;
+import com.procurement.dao.CommitteeDao;
 import com.procurement.dao.CompanyDao;
+import com.procurement.dao.EvaluationDao;
 import com.procurement.dao.UserDao;
 import com.procurement.dao.RequisitionDao;
 import com.procurement.dao.TenderDao;
 import java.io.File;
+import java.text.DecimalFormat;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
@@ -320,6 +325,61 @@ public class ControllerServlet extends HttpServlet {
                 
                 String newBid = bidDao.addBid(bid);
                 String encodedURL = response.encodeRedirectURL("supdash.jsp");
+                response.sendRedirect(encodedURL);
+                
+            } else if(source.equals("addmember")){
+                
+                String tenderid = req.getParameter("tenderid");
+                String userid = req.getParameter("userid");
+                String expertise = req.getParameter("expertise");
+                
+                CommitteeBean com = new CommitteeBean();
+                
+                com.setTenderId(tenderid);
+                com.setUserId(userid);
+                com.setExpertise(expertise);
+                
+                CommitteeDao comDao = new CommitteeDao();
+                
+                String newMember = comDao.addMember(com);
+                String encodedURL = response.encodeRedirectURL("addevcomm.jsp");
+                response.sendRedirect(encodedURL);
+                
+            } else if(source.equals("evaluation")){
+                
+                double pincert = Double.parseDouble(req.getParameter("pincert"));
+                double taxcomp = Double.parseDouble(req.getParameter("taxcomp"));
+                double finhist = Double.parseDouble(req.getParameter("finhist"));
+                double techspec = Double.parseDouble(req.getParameter("techspec"));
+                double stage1 = pincert + taxcomp + finhist + techspec;
+                
+                double fineval = Double.parseDouble(req.getParameter("fineval"));
+                double techeval = Double.parseDouble(req.getParameter("techeval"));
+                double stage2 = fineval + techeval;
+                
+                double bidprice = Double.parseDouble(req.getParameter("bidprice"));
+                double totalbidprice = Double.parseDouble(req.getParameter("totalbidprice"));
+                double value = 100 - ((bidprice / totalbidprice) * 100);
+                DecimalFormat round = new DecimalFormat("##.00");
+                String stage3 = round.format(value);
+                
+                String bidid = req.getParameter("bidid");
+                String committeeid = req.getParameter("hiddenid");
+                String tenderid = req.getParameter("tenderid");
+                
+                EvaluationBean eval = new EvaluationBean();
+                
+                eval.setStage1(stage1);
+                eval.setStage2(stage2);
+                eval.setStage3(stage3);
+                eval.setBidId(bidid);
+                eval.setCommitteeId(committeeid);
+                eval.setTenderId(tenderid);
+                
+                EvaluationDao evalDao = new EvaluationDao();
+                
+                String newEvaluation = evalDao.addEvaluation(eval);
+                String encodedURL = response.encodeRedirectURL("evaluation.jsp");
                 response.sendRedirect(encodedURL);
                 
             }

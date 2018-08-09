@@ -18,6 +18,49 @@
     response.setHeader("Cache-Control", "no-cache, no-store");
     response.setHeader("Pragma", "no-cache");
     response.setHeader("Expires", "0");
+
+    String userName = null;
+    Cookie[] cookies = request.getCookies();
+    if (cookies != null) {
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals("LOGIN_USER")) {
+                userName = cookie.getValue();
+            }
+        }
+    }
+
+    String hiddenid = null;
+
+    String driverName = "org.postgresql.Driver";
+    String connectionUrl = "jdbc:postgresql://localhost:5432/";
+    String dbName = "opms";
+    String userId = "postgres";
+    String password = "1234";
+
+    try {
+        Class.forName(driverName);
+    } catch (ClassNotFoundException e) {
+        e.printStackTrace();
+    }
+
+    Connection connection = null;
+    Statement statement = null;
+    ResultSet resultSet = null;
+
+    try {
+        connection = DriverManager.getConnection(
+                connectionUrl + dbName, userId, password);
+        statement = connection.createStatement();
+        String sql = "SELECT * FROM users WHERE username='" + userName + "'";
+
+        resultSet = statement.executeQuery(sql);
+        while (resultSet.next()) {
+            hiddenid = resultSet.getString("userid");
+        }
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
 %>
 <main id="maindash">
     <jsp:include page="./includes/comdashnav.jsp" />
@@ -25,20 +68,15 @@
                        url = "jdbc:postgresql://localhost:5432/opms"
                        user = "postgres"  password = "1234"/>
     <sql:query  dataSource = "${bids}" var = "result">
-        SELECT company.companyname, bids.bidid, bids.bidprice, bids.techspec, bids.taxcompliance, company.companyid, company.pincertificate, bids.financialhistory FROM company INNER JOIN bids ON company.companyid=bids.companyid;
+        SELECT tenders.title, tenders.description, company.companyname, tenders.tenderid, company.companyid, bids.bidid FROM tenders INNER JOIN bids ON tenders.tenderid=bids.tenderid INNER JOIN company ON company.companyid=bids.companyid INNER JOIN committee ON bids.tenderid=committee.tenderid WHERE committee.userid=<%=hiddenid%>
     </sql:query>
-    <%
-    %>
     <div id="table_stats" class="container z-depth-2">
         <table class="striped">
             <thead>
                 <tr>
-                    <th>Company Name</th>
-                    <th>Bidding Price</th>
-                    <th>Technical Specs</th>
-                    <th>Tax Compliance</th>
-                    <th>Pin Certificate</th>
-                    <th>Financial History</th>
+                    <th>Tender Title</th>
+                    <th>Tender Description</th>
+                    <th>Bidder Company Name</th>
                     <th></th>
                 </tr>
             </thead>
@@ -46,13 +84,10 @@
             <tbody>
                 <c:forEach var = "row" items = "${result.rows}">
                     <tr>
+                        <td><c:out value = "${row.title}"/></td>
+                        <td><c:out value = "${row.description}"/></td>
                         <td><c:out value = "${row.companyname}"/></td>
-                        <td><c:out value = "${row.bidprice}"/></td>
-                        <td><a class="btn waves-effect waves-teal" href="download?source=bid&source2=tech&id=${row.bidid}" >Download file</a></td>
-                        <td><a class="btn waves-effect waves-teal" href="download?source=bid&source2=tax&id=${row.bidid}" >Download file</a></td>
-                        <td><a class="btn waves-effect waves-teal" href="download?source=bid&source2=pin&id=${row.companyid}" >Download file</a></td>
-                        <td><a class="btn waves-effect waves-teal" href="download?source=bid&source2=fin&id=${row.bidid}" >Download file</a></td>
-                        <td><a class="btn red">Evaluate</a></td>
+                        <td><a class="btn red" href="<%=response.encodeURL("stageone.jsp")%>?bidid=${row.bidid}&companyid=${row.companyid}&tenderid=${row.tenderid}">Evaluate</a></td>
                     </tr>
                 </c:forEach>
             </tbody>

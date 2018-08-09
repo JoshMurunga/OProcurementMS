@@ -25,12 +25,13 @@
         $('.parallax').parallax();
 
         var url = window.location;
-        $('ul.nav a[href="' + url + '"]').parent().addClass('active');
         $('ul.nav a').filter(function () {
             return this.href == url;
         }).parent().addClass('active');
 
-
+        $('#evaluate_page').on('click', function () {
+            $('#dash_module_header').toggleClass('active');
+        });
 
     }); // end of document ready
 })(jQuery); // end of jQuery name space

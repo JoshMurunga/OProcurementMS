@@ -98,6 +98,10 @@
         <url-pattern>/users.jsp</url-pattern>
         <url-pattern>/requisitions.jsp</url-pattern>
         <url-pattern>/tenders.jsp</url-pattern>
+        <url-pattern>/addevcomm.jsp</url-pattern>
+        <url-pattern>/addmember.jsp</url-pattern>
+        <url-pattern>/bids.jsp</url-pattern>
+        <url-pattern>/tenderbids.jsp</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>UserDepartmentFilter</filter-name>
@@ -113,6 +117,9 @@
         <filter-name>CommitteeMemberFilter</filter-name>
         <url-pattern>/comdash.jsp</url-pattern>
         <url-pattern>/evaluation.jsp</url-pattern>
+        <url-pattern>/stageone.jsp</url-pattern>
+        <url-pattern>/stagetwo.jsp</url-pattern>
+        <url-pattern>/stagethree.jsp</url-pattern>
     </filter-mapping>
     <session-config>
         <session-timeout>

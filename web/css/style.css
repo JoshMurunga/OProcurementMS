@@ -147,6 +147,8 @@ ul.side-nav .collapsible-header.active::after {
 #table_stats{
     width: 98%;
     margin-top: 8px;
+    margin-bottom: 8px;
+    padding: 8px;
 }
 
 ::-webkit-input-placeholder {
@@ -168,4 +170,12 @@ ul.side-nav .collapsible-header.active::after {
 #toast-container {
     top: 100px !important;
     right: 500px !important;
+}
+
+#edit_mat_button{
+    color: green;
+}
+
+#delete_mat_button{
+    color: red;
 }

@@ -11,11 +11,11 @@
 
     <ul id="accordion" class="collapsible" data-collapsible="accordion">
         <li id="dash_module">
-            <div id="dash_module_header" class="collapsible-header waves-effect waves-teal teal-text"><i class="material-icons teal-text">style</i><b>Bids</b></div>
+            <div id="dash_module_header" class="collapsible-header waves-effect waves-teal teal-text" ><i class="material-icons teal-text">style</i><b>Bids</b></div>
             <div id="dash_module_body" class="collapsible-body">
                 <ul>
                     <li id="module_supplier">
-                        <a class="waves-effect waves-teal" style="text-decoration: none;" href="<%=response.encodeURL("evaluation.jsp")%>">Evaluate Bids</a>
+                        <a id="evaluate_page" class="waves-effect waves-teal" style="text-decoration: none;" href="<%=response.encodeURL("evaluation.jsp")%>">Evaluate Bids</a>
                     </li>
 
                     <li id="module_employee">

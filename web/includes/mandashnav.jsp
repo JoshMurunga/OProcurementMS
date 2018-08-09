@@ -9,9 +9,9 @@
 
     <li id="dash_dashboard"><a class="waves-effect waves-teal teal-text" href="<%=response.encodeURL("mandash.jsp")%>"><i class="material-icons teal-text">home</i><b>Dashboard</b></a></li>
 
-    <ul id="accordion" class="collapsible" data-collapsible="accordion">
+    <ul id="accordion" class=" nav collapsible" data-collapsible="accordion">
         <li id="dash_module">
-            <div id="dash_module_header" class="collapsible-header waves-effect waves-teal teal-text"><i class="material-icons teal-text">add_shopping_cart</i><b>Requisitions</b></div>
+            <div id="dash_module_header" class="nav collapsible-header waves-effect waves-teal teal-text"><i class="material-icons teal-text">add_shopping_cart</i><b>Requisitions</b></div>
             <div id="dash_module_body" class="collapsible-body">
                 <ul>
                     <li id="module_supplier">
@@ -43,7 +43,7 @@
             <div id="dash_module_body" class="collapsible-body">
                 <ul>
                     <li id="module_supplier">
-                        <a class="waves-effect waves-teal" style="text-decoration: none;" href="<%=response.encodeURL("bids.jsp")%>">Manage Bids</a>
+                        <a class="waves-effect waves-teal" style="text-decoration: none;" href="<%=response.encodeURL("tenderbids.jsp")%>">Manage Bids</a>
                     </li>
 
                     <li id="module_employee">

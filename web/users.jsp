@@ -49,14 +49,10 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="input-field col s3">
-                            <i class="material-icons prefix">lock_outline</i>
-                            <input id="password" name="password" type="password" class="validate">
-                            <label for="password">Password</label>
-                        </div>
-                        <div class="input-field col s3">
-                            <input id="confirmpassword" name="cpassword" type="password" class="validate">
-                            <label for="confirmpassword">Confirm Password</label>
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">work</i>
+                            <input id="department" name="department" type="text" class="validate">
+                            <label for="department">Department</label>
                         </div>
                         <div class="input-field col s6">
                             <i class="material-icons prefix">phone</i>
@@ -66,17 +62,21 @@
                     </div>
                     <div class="row">
                         <div class="input-field col s6">
-                            <i class="material-icons prefix">work</i>
-                            <input id="department" name="department" type="text" class="validate">
-                            <label for="department">Department</label>
-                        </div>
-                        <div class="input-field col s6">
                             <select name="role" >
                                 <option value="" disabled selected>Role</option>
                                 <option value="CommitteeMember">Committee Member</option>
                                 <option value="UserDepartment">User Department</option>
                             </select>
                             <label>Select User Role</label>
+                        </div>
+                        <div class="input-field col s3">
+                            <i class="material-icons prefix">lock_outline</i>
+                            <input id="password" name="password" type="password" class="validate">
+                            <label for="password">Password</label>
+                        </div>
+                        <div class="input-field col s3">
+                            <input id="confirmpassword" name="cpassword" type="password" class="validate">
+                            <label for="confirmpassword">Confirm Password</label>
                         </div>
                     </div>
 
@@ -97,7 +97,7 @@
         SELECT * FROM users WHERE role='UserDepartment' OR role='CommitteeMember' OR role='Supplier';
     </sql:query>
     <div id="table_stats" class="container z-depth-2">
-        <table class="striped">
+        <table class="striped dataTabularized" id="clips_table">
             <thead>
                 <tr>
                     <th>First Name</th>
@@ -122,8 +122,8 @@
                         <td><c:out value = "${row.contact}"/></td>
                         <td><c:out value = "${row.department}"/></td>
                         <td><c:out value = "${row.role}"/></td>
-                        <td><button class="waves-effect waves-light btn orange" id="${row.userid}">Edit</button></td>
-                        <td><button class="waves-effect waves-light btn green" id="${row.userid}">Delete</button></td>
+                        <td><a id="edit_mat_button" href="#"><i class="material-icons">edit</i></a></td>
+                        <td><a id="delete_mat_button" href="#"><i class="material-icons">delete</i></a></td>
                     </tr>
                 </c:forEach>
             </tbody>
