@@ -22,9 +22,17 @@
                        url = "jdbc:postgresql://localhost:5432/opms"
                        user = "postgres"  password = "1234"/>
     <sql:query  dataSource = "${tenders}" var = "result">
-        SELECT * FROM tenders;
+        SELECT tenders.tenderid, tenders.title, tenders.description, tenders.opendate, tenders.closingdate, tenders.tenderdocs FROM tenders INNER JOIN evaluationlot ON tenders.tenderid = evaluationlot.tenderid WHERE evaluationlot.publish = false GROUP BY tenders.tenderid;
     </sql:query>
+    <center><div class="green-text" style="font-size: 20; margin-top: 8px"><b>TENDER BIDS MANAGEMENT</b></div></center>
     <div id="table_stats" class="container z-depth-2">
+        <% String message = (String) request.getAttribute("errMessage");
+            if (message == null) {
+                message = "";
+            } else {
+        %>
+        <script type="text/javascript"> Materialize.toast("<%=message%>", 4000);</script>
+        <% }%>
         <table class="striped dataTabularized" id="clips_table">
             <thead>
                 <tr>

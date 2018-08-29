@@ -19,15 +19,15 @@
     <sql:query  dataSource = "${tenders}" var = "result">
         SELECT * FROM tenders;
     </sql:query>
-    <center><div class="teal-text" style="font-size: 30; margin-top: 8px"><b>TENDER ANNOUNCEMENTS</b></div></center>
+    <center><div class="green-text" style="font-size: 30; margin-top: 8px"><b>TENDER ANNOUNCEMENTS</b></div></center>
     <div id="table_stats" class="container z-depth-2">
-        <table class="striped">
+        <table class="striped dataTabularized" id="clips_table">
             <thead>
                 <tr>
                     <th>Title</th>
                     <th>Category</th>
                     <th>Description</th>
-                    <th>Open Date</th>
+                    <th>Opening Date</th>
                     <th>Closing Date</th>
                     <th>Tender Documents</th>
                     <th></th>
@@ -53,8 +53,7 @@
         <div class="modal-content">
             <h5>Register Your Account To Submit Bid</h5>
             <div class="row">
-                <form class="col s12" method="POST" action="<%=response.encodeURL("ControllerServlet")%>" id="register" name="register" onsubmit="return validateform()">
-                    <b><span style="color:red"><%=(request.getAttribute("errMessage") == null) ? "" : request.getAttribute("errMessage")%></span></b>
+                <form class="col s12" method="POST" action="<%=response.encodeURL("ControllerServlet")%>" id="supregister" name="supregister" onsubmit="return newvalidate()">
                     <div class="row">
                         <div class="input-field col s6">
                             <i class="material-icons prefix">person_outline</i>
@@ -67,7 +66,7 @@
                         </div>
                     </div>
                     <input type="hidden" name="source" value= "supregister">
-                    <input type="hidden" name="department" value= "Supplier">
+                    <input type="hidden" name="supplierdepartment" value= "Supplier">
                     <input type="hidden" name="role" value= "Supplier">
                     <div class="row">
                         <div class="input-field col s6">
@@ -102,7 +101,7 @@
             </div>
         </div>
         <div class="modal-footer">
-            <button type="submit" form="register" class="waves-effect waves-teal btn" name='editdetails' onclick="return validateform()">Submit</button>
+            <button type="submit" form="supregister" class="waves-effect waves-teal btn" name='supRegister' onclick="return newvalidate()">Submit</button>
             <a class="modal-action modal-close waves-effect waves-teal btn">close</a>
         </div>
     </div>

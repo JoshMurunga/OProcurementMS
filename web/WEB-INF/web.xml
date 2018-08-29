@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <welcome-file-list>
+        <welcome-file>/login.jsp</welcome-file>
+    </welcome-file-list>
     <servlet>
         <servlet-name>DBConnection</servlet-name>
         <servlet-class>com.util.database.DBConnection</servlet-class>
@@ -43,6 +46,10 @@
     <servlet>
         <servlet-name>SupplierServlet</servlet-name>
         <servlet-class>com.procurement.controller.SupplierServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EmailServlet</servlet-name>
+        <servlet-class>com.procurement.controller.EmailServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>DBConnection</servlet-name>
@@ -112,6 +119,9 @@
         <filter-name>SupplierFilter</filter-name>
         <url-pattern>/supdash.jsp</url-pattern>
         <url-pattern>/bidding.jsp</url-pattern>
+        <url-pattern>/tenderoutcome.jsp</url-pattern>
+        <url-pattern>/outcome.jsp</url-pattern>
+        <url-pattern>/award.jsp</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>CommitteeMemberFilter</filter-name>
@@ -121,6 +131,10 @@
         <url-pattern>/stagetwo.jsp</url-pattern>
         <url-pattern>/stagethree.jsp</url-pattern>
     </filter-mapping>
+    <servlet-mapping>
+        <servlet-name>EmailServlet</servlet-name>
+        <url-pattern>/EmailServlet</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

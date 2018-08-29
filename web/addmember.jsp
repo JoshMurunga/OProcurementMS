@@ -60,14 +60,14 @@
                        url = "jdbc:postgresql://localhost:5432/opms"
                        user = "postgres"  password = "1234"/>
     <sql:query  dataSource = "${tenders}" var = "result">
-        SELECT * FROM users WHERE role='CommitteeMember';
+        select * from users where not exists (select 1 from committee where userid = users.userid and tenderid=<%= tenderid %>) and role='CommitteeMember';
     </sql:query>
     <br>
     <center>
         <div class="container">
             <div class="teal-text"><b>Select Committee Member to Assign Bids of The Following Tender</b></div><br>
             <div class="container" style="padding: 32px 30px 0px 30px; border: 1px solid #EEE; background: whitesmoke">
-                <form class="col s12" name="company" action="<%=request.getContextPath()%>/ControllerServlet" method="post" enctype="multipart/form-data">
+                <form class="col s12" name="member" action="<%=request.getContextPath()%>/ControllerServlet" method="post" enctype="multipart/form-data" onsubmit="return validateMember()">
                     <table>
                         <tr>
                             <td class="teal-text"><b>Tender Title</b></td>

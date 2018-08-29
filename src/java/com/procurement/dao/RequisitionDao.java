@@ -13,6 +13,8 @@ import com.procurement.bean.RequisitionBean;
 
 public class RequisitionDao {
 
+    String requisitionid = null;
+
     public String reqValidate(RequisitionBean reqBean) {
         String item = reqBean.getItem();
         String category = reqBean.getCategory();
@@ -20,24 +22,100 @@ public class RequisitionDao {
         String unitprice = reqBean.getUnitPrice();
         String quantity = reqBean.getQuantity();
         String totalprice = reqBean.getTotalPrice();
-        String supplier = reqBean.getSupplier();
         String userid = reqBean.getUserId();
         String description = reqBean.getDescription();
 
         Connection conn = null;
         Statement statement = null;
+        int ex = 0;
 
         try {
             conn = DBConnection.createConnection();
             statement = conn.createStatement();
 
-            statement.executeUpdate("INSERT INTO requisitions (item,units,priceperunit,quantity,totalprice,category,supplier,userid,description)"
-                    + " VALUES ('" + item + "','" + units + "','" + unitprice + "','" + quantity + "','" + totalprice + "','" + category + "','" + supplier + "','"+ userid +"','"+ description +"')");
+            ex = statement.executeUpdate("INSERT INTO requisitions (item,category,units,priceperunit,quantity,totalprice,userid,description) "
+                    + "VALUES ('" + item + "','" + category + "','" + units + "','" + unitprice + "','" + quantity + "','" + totalprice + "','" + userid + "','" + description + "')");
+            
+            if (ex > 0) {
+                return "You successfully added a new requisition";
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return "Failed To Register";
+        return "something went wrong, please try again";
+    }
+
+    public String reqDelete(String myid) {
+        requisitionid = myid;
+
+        Connection conn = null;
+        Statement statement = null;
+        int ex = 0;
+
+        try {
+            conn = DBConnection.createConnection();
+            statement = conn.createStatement();
+
+            ex = statement.executeUpdate("DELETE FROM requisitions WHERE requisitionid='" + requisitionid + "'");
+
+            if (ex > 0) {
+                return "You successfully removed the selected requisition";
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return "something went wrong, please try again";
+    }
+
+    public String reqApprove(String myid) {
+        requisitionid = myid;
+
+        Connection conn = null;
+        Statement statement = null;
+        int ex = 0;
+
+        try {
+            conn = DBConnection.createConnection();
+            statement = conn.createStatement();
+
+            ex = statement.executeUpdate("UPDATE requisitions SET status='approved' WHERE requisitionid='" + requisitionid + "'");
+            
+            if (ex > 0) {
+                return "You successfully approved the selected requisition";
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return "something went wrong, please try again";
+    }
+
+    public String reqDecline(String myid) {
+        requisitionid = myid;
+
+        Connection conn = null;
+        Statement statement = null;
+        int ex = 0;
+
+        try {
+            conn = DBConnection.createConnection();
+            statement = conn.createStatement();
+
+            ex = statement.executeUpdate("UPDATE requisitions SET status='declined' WHERE requisitionid='" + requisitionid + "'");
+            
+            if (ex > 0) {
+                return "You successfully declined the selected requisition";
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return "something went wrong, please try again";
     }
 }

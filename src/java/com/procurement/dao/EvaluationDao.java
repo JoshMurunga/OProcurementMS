@@ -12,15 +12,19 @@ import com.util.database.DBConnection;
 import com.procurement.bean.EvaluationBean;
 
 public class EvaluationDao {
-    
-    public String addEvaluation(EvaluationBean evBean){
+
+    String publisher = null;
+    String companyid = null;
+    String awardid = null;
+
+    public String addEvaluation(EvaluationBean evBean) {
         double stage1 = evBean.getStage1();
         double stage2 = evBean.getStage2();
         String stage3 = evBean.getStage3();
         String bidid = evBean.getBidId();
         String committeeid = evBean.getCommitteeId();
         String tenderid = evBean.getTenderId();
-        
+
         Connection conn = null;
         Statement statement = null;
 
@@ -34,8 +38,79 @@ public class EvaluationDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        
+
+        return "failed to add";
+    }
+
+    public String addPublication(String publish, String company) {
+        publisher = publish;
+        companyid = company;
+
+        Connection conn = null;
+        Statement statement = null;
+        int ex = 0;
+
+        try {
+            conn = DBConnection.createConnection();
+            statement = conn.createStatement();
+
+            ex = statement.executeUpdate("UPDATE evaluationlot SET publish=true WHERE tenderid ='" + publisher + "' ");
+
+            if (ex > 0) {
+
+                statement.executeUpdate("INSERT INTO awardtender (tenderid,companyid,message)"
+                        + "VALUES ('"+publisher+"','"+companyid+"','Your bid was successful and have been awarded the tender')");
+                
+                return "You have successfully published the tender outcome";
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return "Something went wrong, please try again";
+    }
+    
+    public String acceptAward(String id) {
+        awardid = id;
+
+        Connection conn = null;
+        Statement statement = null;
+        int ex = 0;
+
+        try {
+            conn = DBConnection.createConnection();
+            statement = conn.createStatement();
+
+            ex = statement.executeUpdate("UPDATE awardtender SET status='accepted' WHERE awardid ='" + awardid + "' ");
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         return "failed to add";
     }
     
+    public String declineAward(String id) {
+        awardid = id;
+
+        Connection conn = null;
+        Statement statement = null;
+        int ex = 0;
+
+        try {
+            conn = DBConnection.createConnection();
+            statement = conn.createStatement();
+
+            ex = statement.executeUpdate("UPDATE awardtender SET status='declined' WHERE awardid ='" + awardid + "' ");
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return "failed to add";
+    }
+
 }

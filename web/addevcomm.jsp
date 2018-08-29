@@ -22,10 +22,18 @@
                        url = "jdbc:postgresql://localhost:5432/opms"
                        user = "postgres"  password = "1234"/>
     <sql:query  dataSource = "${tenders}" var = "result">
-        SELECT * FROM tenders;
+        select tenders.tenderid, tenders.title, tenders.description, tenders.opendate, tenders.closingdate, count(committeeid) as num from tenders left join committee on tenders.tenderid=committee.tenderid group by tenders.title, tenders.description, tenders.opendate, tenders.closingdate, tenders.tenderid
     </sql:query>
+    <center><div class="green-text" style="font-size: 20; margin-top: 8px"><b>ADD EVALUATION COMMITTEE MEMBER</b></div></center>
     <div id="table_stats" class="container z-depth-2">
-        <table class="striped">
+        <% String message = (String) request.getAttribute("errMessage");
+            if (message == null) {
+                message = "";
+            } else {
+        %>
+        <script type="text/javascript"> Materialize.toast("<%=message%>", 4000);</script>
+        <% }%>
+        <table class="striped dataTabularized" id="clips_table">
             <thead>
                 <tr>
                     <th>Tender Title</th>
@@ -44,7 +52,7 @@
                         <td><c:out value = "${row.description}"/></td>
                         <td><fmt:formatDate type="date" value = "${row.opendate}"/></td>
                         <td><fmt:formatDate type="date" value = "${row.closingdate}"/></td>
-                        <td style="text-align: center"></td>
+                        <td style="text-align: center">${row.num}</td>
                         <td><a class="btn red" href="<%=response.encodeURL("addmember.jsp")%>?id=${row.tenderid}">Add</a></td>
                     </tr>
                 </c:forEach>

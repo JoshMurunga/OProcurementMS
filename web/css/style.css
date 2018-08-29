@@ -99,7 +99,7 @@ ul.side-nav .collapsible-header.active::after {
 }
 
 .side-nav .collapsible-body > ul:not(.collapsible) > li.active a, .side-nav.fixed .collapsible-body > ul:not(.collapsible) > li.active a {
-    background-color: teal;
+    background-color: grey;
     color: white;
 }
 
@@ -142,6 +142,20 @@ ul.side-nav .collapsible-header.active::after {
     margin-right: auto;
     width: 64% !important; 
     height: 77% !important; 
+}
+
+#modal4 { 
+    margin-left: auto;
+    margin-right: auto;
+    width: 50% !important; 
+    height: 87% !important;
+}
+
+#modal5 { 
+    margin-left: auto;
+    margin-right: auto;
+    width: 50% !important; 
+    height: 77% !important;
 }
 
 #table_stats{

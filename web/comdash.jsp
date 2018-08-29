@@ -20,7 +20,7 @@
     <div id="cards_stats">
         <div class="row">
             <div class="col s12 m6 l3">
-                <div class="card grey z-depth-2">
+                <div class="card green z-depth-2">
                     <div class="card-content white-text">
                         <i class="material-icons medium">folder_open</i>
                         <span class="right">
@@ -29,7 +29,7 @@
                         </span>
                     </div>
                     <div class="card-action white">
-                        <a href="#" class="grey-text">View Details<i class="material-icons right">send</i></a>
+                        <a href="#" class="green-text">View Details<i class="material-icons right">send</i></a>
                     </div>
                 </div>
             </div>
@@ -48,7 +48,7 @@
                 </div>
             </div>
             <div class="col s12 m6 l3">
-                <div class="card teal z-depth-2">
+                <div class="card green z-depth-2">
                     <div class="card-content white-text">
                         <i class="material-icons medium">style</i>
                         <span class="right">
@@ -57,12 +57,12 @@
                         </span>
                     </div>
                     <div class="card-action white">
-                        <a href="#" class="teal-text">View Details<i class="material-icons right">send</i></a>
+                        <a href="#" class="green-text">View Details<i class="material-icons right">send</i></a>
                     </div>
                 </div>
             </div>
             <div class="col s12 m6 l3">
-                <div class="card blue z-depth-2">
+                <div class="card red z-depth-2">
                     <div class="card-content white-text">
                         <i class="material-icons medium">fiber_new</i>
                         <span class="right">
@@ -71,7 +71,7 @@
                         </span>
                     </div>
                     <div class="card-action white">
-                        <a href="#" class="blue-text">View Details<i class="material-icons right">send</i></a>
+                        <a href="#" class="red-text">View Details<i class="material-icons right">send</i></a>
                     </div>
                 </div>
             </div>

@@ -20,22 +20,26 @@ public class TenderDao {
         String closingdate = tenBean.getClosingDate();
         String description = tenBean.getDescription();
         String tenderdocs = tenBean.getTenderDocs();
-        
 
         Connection conn = null;
         Statement statement = null;
+        int ex = 0;
 
         try {
             conn = DBConnection.createConnection();
             statement = conn.createStatement();
 
-            statement.executeUpdate("INSERT INTO tenders (title,category,opendate,closingdate,description,tenderdocs)"
+            ex = statement.executeUpdate("INSERT INTO tenders (title,category,opendate,closingdate,description,tenderdocs)"
                     + " VALUES ('" + title + "','" + category + "','" + opendate + "','" + closingdate + "','" + description + "','" + tenderdocs + "')");
+
+            if (ex > 0) {
+                return "You have successfully added a tender";
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return "Failed To Register";
+        return "Something went wrong, please try again";
     }
 }

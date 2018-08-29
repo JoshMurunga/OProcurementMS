@@ -21,10 +21,18 @@
                        url = "jdbc:postgresql://localhost:5432/opms"
                        user = "postgres"  password = "1234"/>
     <sql:query  dataSource = "${requisition}" var = "result">
-        SELECT * FROM requisitions;
+        SELECT * FROM requisitions WHERE status='pending';
     </sql:query>
+    <center><div class="green-text" style="font-size: 20; margin-top: 8px"><b>ALL DEPARTMENTS REQUISITIONS</b></div></center>
     <div id="table_stats" class="container z-depth-2">
-        <table class="striped" id="example">
+        <% String message = (String) request.getAttribute("errMessage");
+            if (message == null) {
+                message = "";
+            } else {
+        %>
+        <script type="text/javascript"> Materialize.toast("<%=message%>", 4000);</script>
+        <% }%>
+        <table class="striped dataTabularized" id="clips_table">
             <thead>
                 <tr>
                     <th>Item</th>
@@ -33,7 +41,6 @@
                     <th>Quantity</th>
                     <th>Total Price(Ksh)</th>
                     <th>Category</th>
-                    <th>Supplier</th>
                     <th>Description File</th>
                     <th></th>
                     <th></th>
@@ -49,10 +56,9 @@
                         <td><c:out value = "${row.quantity}"/></td>
                         <td><c:out value = "${row.totalprice}"/></td>
                         <td><c:out value = "${row.category}"/></td>
-                        <td><c:out value = "${row.supplier}"/></td>
                         <td><a class="btn orange waves-effect waves-teal" href="download?source=requisition&id=${row.requisitionid}" >Download</a></td>
-                        <td><a class="btn green waves-effect waves-teal" href="<%=response.encodeURL("tenders.jsp")%>" onclick="return ConfirmSubmit()">Approve</a></td>
-                        <td><a class="btn red">Decline</a></td>
+                        <td><a class="btn green waves-effect waves-teal" href="<%=response.encodeURL("ControllerServlet")%>?source=reqapp&id=${row.requisitionid}" onclick="return ConfirmSubmita()">Approve</a></td>
+                        <td><a class="btn red waves-effect waves-teal" href="<%=response.encodeURL("ControllerServlet")%>?source=reqdecl&id=${row.requisitionid}" onclick="return ConfirmSubmitd()">Decline</a></td>
                     </tr>
                 </c:forEach>
             </tbody>

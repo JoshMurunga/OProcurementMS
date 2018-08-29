@@ -14,7 +14,7 @@
     response.setHeader("Cache-Control", "no-cache, no-store");
     response.setHeader("Pragma", "no-cache");
     response.setHeader("Expires", "0");
-    
+
     String tenderid = request.getParameter("id");
 %>
 <main id="maindash">
@@ -23,8 +23,19 @@
                        url = "jdbc:postgresql://localhost:5432/opms"
                        user = "postgres"  password = "1234"/>
     <sql:query  dataSource = "${tenders}" var = "result">
-        select company.companyname, evaluationlot.bidid, avg(evaluationlot.stage1) as stageone, avg(evaluationlot.stage2) as stagetwo, avg(evaluationlot.stage3) as stagethree, round((avg(evaluationlot.stage1+evaluationlot.stage2+evaluationlot.stage3))::numeric,2) as total, row_number() OVER (ORDER BY (avg(evaluationlot.stage1+evaluationlot.stage2+evaluationlot.stage3)) DESC) as rnum from evaluationlot inner join bids on evaluationlot.bidid=bids.bidid inner join company on bids.companyid=company.companyid where evaluationlot.tenderid=<%=tenderid%> group by company.companyname, evaluationlot.bidid;
+        select company.companyname, company.companyid, evaluationlot.bidid, avg(evaluationlot.stage1) as stageone, avg(evaluationlot.stage2) as stagetwo, avg(evaluationlot.stage3) as stagethree, round((avg(evaluationlot.stage1+evaluationlot.stage2+evaluationlot.stage3))::numeric,2) as total, row_number() OVER (ORDER BY (avg(evaluationlot.stage1+evaluationlot.stage2+evaluationlot.stage3)) DESC) as rnum from evaluationlot inner join bids on evaluationlot.bidid=bids.bidid inner join company on bids.companyid=company.companyid where evaluationlot.tenderid=<%=tenderid%> group by company.companyname, evaluationlot.bidid, company.companyid;
     </sql:query>
+
+    <form id="butt_stats" class="right" method="post" action="<%=response.encodeURL("ControllerServlet")%>" onsubmit="return publisher()">
+        <input type="hidden" name="source" value= "publish">
+        <input type="hidden" name="tenderid" value= "<%=tenderid%>">
+        <c:forEach var = "row" items = "${result.rows}" end = "0">
+            <input type="hidden" name="companyid" value= "${row.companyid}">
+        </c:forEach>
+        <button class="btn col s12 waves-effect waves-light orange" type="submit" name="action">Publish Result</button>
+    </form>
+
+    <br><br>
     <div id="table_stats" class="container z-depth-2">
         <table class="striped dataTabularized" id="clips_table">
             <thead>

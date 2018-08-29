@@ -66,6 +66,8 @@
                                 <label for="poor">Poor</label>
                                 <input name="fineval" id="verypoor" type="radio" class="with-gap" value="10">
                                 <label for="verypoor">Very Poor</label>
+                                <input name="fineval" id="nodocument" type="radio" class="with-gap" value="0">
+                                <label for="nodocument">No Financial History Document Provided</label>
                             </td>
                         </tr>
                         <input type="hidden" name="bidid" value= "<%=bidid%>">
@@ -86,6 +88,8 @@
                                 <label for="some">Some Specifications Met</label>
                                 <input name="techeval" id="none" type="radio" class="with-gap" value="10">
                                 <label for="none">No Specifications Met</label>
+                                <input name="techeval" id="no_document" type="radio" class="with-gap" value="0">
+                                <label for="no_document">No Specification Document Provided</label>
                             </td>
                         </tr>
                         <tr><td></td><td></td><td><button class="btn waves-effect waves-light red right" type="submit" name="action">Proceed<i class="material-icons right">send</i></button></td></tr>

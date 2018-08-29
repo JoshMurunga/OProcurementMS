@@ -94,7 +94,7 @@
     <div id="cards_stats">
         <div class="row">
             <div class="col s12 m6 l3">
-                <div class="card grey z-depth-2">
+                <div class="card green z-depth-2">
                     <div class="card-content white-text">
                         <i class="material-icons medium">folder_open</i>
                         <span class="right">
@@ -103,7 +103,7 @@
                         </span>
                     </div>
                     <div class="card-action white">
-                        <a href="#" class="grey-text">View Details<i class="material-icons right">send</i></a>
+                        <a href="#" class="green-text">View Details<i class="material-icons right">send</i></a>
                     </div>
                 </div>
             </div>
@@ -122,7 +122,7 @@
                 </div>
             </div>
             <div class="col s12 m6 l3">
-                <div class="card teal z-depth-2">
+                <div class="card green z-depth-2">
                     <div class="card-content white-text">
                         <i class="material-icons medium">done_all</i>
                         <span class="right">
@@ -131,12 +131,12 @@
                         </span>
                     </div>
                     <div class="card-action white">
-                        <a href="#" class="teal-text">View Details<i class="material-icons right">send</i></a>
+                        <a href="#" class="green-text">View Details<i class="material-icons right">send</i></a>
                     </div>
                 </div>
             </div>
             <div class="col s12 m6 l3">
-                <div class="card blue z-depth-2">
+                <div class="card red z-depth-2">
                     <div class="card-content white-text">
                         <i class="material-icons medium">new_releases</i>
                         <span class="right">
@@ -145,7 +145,7 @@
                         </span>
                     </div>
                     <div class="card-action white">
-                        <a href="#" class="blue-text">View Details<i class="material-icons right">send</i></a>
+                        <a href="award.jsp" class="red-text">View Details<i class="material-icons right">send</i></a>
                     </div>
                 </div>
             </div>
@@ -212,14 +212,14 @@
         SELECT * FROM tenders;
     </sql:query>
     <div id="table_stats" style="display: <%= style%>" class="container z-depth-2">
-        <center><div class="teal-text" style="font-size: 20; margin-top: 8px"><b>TENDER ANNOUNCEMENTS</b></div></center>
-        <table class="striped">
+        <center><div class="green-text" style="font-size: 20; margin-top: 8px"><b>TENDER ANNOUNCEMENTS</b></div></center>
+        <table class="striped dataTabularized" id="clips_table">
             <thead>
                 <tr>
                     <th>Title</th>
                     <th>Category</th>
                     <th>Description</th>
-                    <th>Open Date</th>
+                    <th>Opening Date</th>
                     <th>Closing Date</th>
                     <th>Tender Documents</th>
                     <th></th>

@@ -12,7 +12,7 @@
 <main>
     <br>
     <center>
-        <div class="teal-text"><b>Login to your account</b></div><br>
+        <div class="green-text"><b>Login to your account</b></div><br>
         <div class="container">
             <div class="container">
                 <div class="container">
@@ -40,12 +40,12 @@
                                     <label for="password">Enter Your Password</label>
                                 </div>
                                 <label style="float: right">
-                                    <a class="pink-text" href="forgotpass.jsp" ><b>Forgot Password?</b></a>
+                                    <a class="pink-text" href="<%=response.encodeURL("forgotpass.jsp")%>" ><b>Forgot Password?</b></a>
                                 </label>
                             </div>
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <button class="btn col s12 waves-effect waves-light" type="submit" name="action">Login</button>
+                                    <button class="btn col s12 waves-effect waves-light green" type="submit" name="action">Login</button>
                                 </div>
                             </div>
                         </form>

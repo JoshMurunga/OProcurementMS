@@ -64,53 +64,57 @@
 %>
 <main id="maindash">
     <jsp:include page="./includes/dptdashnav.jsp" />
-    <a class="waves-effect waves-light btn modal-trigger right red" id="butt_stats" href="#modal1"><i class="material-icons right">add</i>add new requisition</a><br>
+    <center><div class="green-text" style="font-size: 20; margin-top: 8px"><b>DEPARTMENT REQUISITIONS</b><a class="waves-effect waves-light btn modal-trigger right red" id="butt_stats" href="#modal1"><i class="material-icons right">add</i>add new requisition</a></div></center>
     <div id="modal1" class="modal modal-fixed-footer">
         <div class="modal-content">
             <h5>Fill in form to add new requisition</h5>
             <div class="row">
-                <form class="col s12" method="POST" action="<%=response.encodeURL("ControllerServlet")%>" id="editinfo" name="editinfo" enctype="multipart/form-data">
+                <form class="col s12" method="POST" action="<%=response.encodeURL("ControllerServlet")%>" id="requisitionform" name="requisitionform" enctype="multipart/form-data" onsubmit="return validateReq()">
                     <div class="row">
                         <div class="input-field col s6">
-                            <input id="item" name="item" type="text" class="validate" required>
+                            <input id="item" name="item" type="text" class="validate">
                             <label for="item">Item</label>
                         </div>
                         <div class="input-field col s6">
-                            <input id="category" name="category" type="text" class="validate" required>
+                            <select id="category" name="category" >
+                                <option value="" disabled selected>Select Category</option>
+                                <option value="Electronics">Electronics</option>
+                                <option value="Funiture">Furniture</option>
+                                <option value="Stationery">Stationery</option>
+                                <option value="Construction">Construction</option>
+                                <option value="Food and Nutrition">Food and Nutrition</option>
+                                <option value="Sanitation">Sanitation</option>
+                            </select>
                             <label for="category">Category</label>
                         </div>
                     </div>
                     <input type="hidden" name="source" value= "requisition">
-                    <input type="hidden" name="userid" value="<%= hiddenid%>">
+                    <input type="hidden" name="hiddenid" value="<%= hiddenid%>">
                     <div class="row">
                         <div class="input-field col s6">
-                            <input id="units" name="units" type="text" class="validate" required>
+                            <input id="units" name="units" type="text" class="validate">
                             <label for="units">Units of Measure</label>
                         </div>
                         <div class="input-field col s6">
-                            <input id="unitprice" name="unitprice" type="text" class="validate" required>
+                            <input id="unitprice" name="unitprice" type="text" class="validate">
                             <label for="unitprice">Price Per Unit</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s6">
-                            <input id="quantity" name="quantity" type="text" class="validate" required>
+                            <input id="quantity" name="quantity" type="text" class="validate">
                             <label for="quantity">Quantity</label>
                         </div>
                         <div class="input-field col s6">
-                            <input id="totalprice" name="totalprice" type="text" class="validate" required>
+                            <input id="totalprice" name="totalprice" type="text" class="validate">
                             <label for="totalprice">Total Price</label>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="input-field col s6">
-                            <input id="supplier" name="supplier" type="text" class="validate" required>
-                            <label for="supplier">Supplier</label>
-                        </div>
                         <div class="file-field input-field col s6">
                             <div class="btn red"><span>Add Description File</span><input type="file" name="description"></div>
                             <div class="file-path-wrapper">
-                                <input class="file-path validate" name="description" type="text" placeholder="Upload description file">
+                                <input class="file-path validate" id="description" name="description" type="text" placeholder="Upload description file">
                             </div>
                         </div>
                     </div>
@@ -118,8 +122,8 @@
             </div>
         </div>
         <div class="modal-footer">
-            <button type="submit" form="editinfo" class="waves-effect waves-teal btn" name='editdetails'>Submit</button>
-            <a href="#!" class="modal-action modal-close waves-effect waves-teal btn">close</a>
+            <button type="submit" form="requisitionform" class="waves-effect waves-teal green btn" name='editdetails' onclick="return validateReq">Submit</button>
+            <a class="modal-action modal-close waves-effect waves-teal red btn">close</a>
         </div>
     </div>
 
@@ -131,7 +135,14 @@
         SELECT * FROM requisitions WHERE userid=<%= hiddenid%>;
     </sql:query>
     <div id="table_stats" class="container z-depth-2">
-        <table class="striped">
+        <table class="striped dataTabularized" id="clips_table">
+            <% String message = (String) request.getAttribute("errMessage");
+                if (message == null) {
+                    message = "";
+                } else {
+            %>
+            <script type="text/javascript"> Materialize.toast("<%=message%>", 4000);</script>
+            <% }%>
             <thead>
                 <tr>
                     <th>Item</th>
@@ -140,10 +151,9 @@
                     <th>Qty</th>
                     <th>Total Price</th>
                     <th>Category</th>
-                    <th>Supplier</th>
                     <th>Description</th>
                     <th>Status</th>
-                    <th>Action</th>
+                    <th></th>
                 </tr>
             </thead>
 
@@ -156,10 +166,9 @@
                         <td><c:out value = "${row.quantity}"/></td>
                         <td><c:out value = "${row.totalprice}"/></td>
                         <td><c:out value = "${row.category}"/></td>
-                        <td><c:out value = "${row.supplier}"/></td>
-                        <td><a class="btn waves-effect waves-teal" href="download?source=requisition&id=${row.requisitionid}" >Download file</a></td>
-                        <td></td>
-                        <td></td>
+                        <td><a class="btn waves-effect waves-teal green" href="download?source=requisition&id=${row.requisitionid}" >Download file</a></td>
+                        <td><c:out value = "${row.status}"/></td>
+                        <td><a id="delete_mat_button" onclick="return remover()" href="<%=response.encodeURL("ControllerServlet")%>?source=reqdel&id=${row.requisitionid}"><i class="material-icons">delete</i></a></td>
                     </tr>
                 </c:forEach>
             </tbody>

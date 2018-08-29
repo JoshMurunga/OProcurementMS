@@ -16,7 +16,10 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 
 public class UserDao {
+
     AuthenticationServlet authen = new AuthenticationServlet();
+    String userid = null;
+    String newpassword = null;
 
     public String userLogin(UserBean userBean) throws NoSuchAlgorithmException, InvalidKeySpecException {
         String username = userBean.getUserName();
@@ -68,7 +71,7 @@ public class UserDao {
         String contact = userBean.getContact();
         String department = userBean.getDepartment();
         String role = userBean.getRole();
-        
+
         Connection conn = null;
         Statement statement = null;
         ResultSet resultSet = null;
@@ -105,5 +108,138 @@ public class UserDao {
         }
 
         return "Failed To Register";
+    }
+
+    public String userUpdate(UserBean userBean, String myuserid) {
+        String firstname = userBean.getFirstName();
+        String lastname = userBean.getLastName();
+        String email = userBean.getEmail();
+        String username = userBean.getUserName();
+        userid = myuserid;
+
+        Connection conn = null;
+        Statement statement = null;
+
+        try {
+            conn = DBConnection.createConnection();
+            statement = conn.createStatement();
+
+            statement.executeUpdate("UPDATE users SET firstname='" + firstname + "', lastname='" + lastname + "', email='" + email + "', username='" + username + "' WHERE userid ='" + userid + "' ");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return "Failed To Register";
+    }
+
+    public String userNewPassword(UserBean userBean, String newpass, String myuserid) throws NoSuchAlgorithmException, InvalidKeySpecException {
+        String password = userBean.getPassword();
+        newpassword = authen.hash(newpass);
+        userid = myuserid;
+
+        Connection conn = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String passwordDB = null;
+        String roleDB = null;
+        int count = 0;
+
+        try {
+            conn = DBConnection.createConnection();
+            statement = conn.createStatement();
+            resultSet = statement.executeQuery("SELECT * FROM users WHERE userid='" + userid + "'");
+
+            while (resultSet.next()) {
+                passwordDB = resultSet.getString("password");
+                roleDB = resultSet.getString("role");
+                ++count;
+            }
+
+            if (count == 1) {
+
+                if (authen.validatePassword(password, passwordDB)) {
+
+                    statement.executeUpdate("UPDATE users SET password='" + newpassword + "' WHERE userid ='" + userid + "' ");
+
+                }
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return "Failed To Register";
+    }
+
+    public String userResetPassword(String newpass, String myuserid) throws NoSuchAlgorithmException, InvalidKeySpecException {
+
+        newpassword = authen.hash(newpass);
+        userid = myuserid;
+
+        Connection conn = null;
+        Statement statement = null;
+
+        try {
+            conn = DBConnection.createConnection();
+            statement = conn.createStatement();
+
+            statement.executeQuery("UPDATE users SET password='" + newpassword + "' WHERE userid ='" + userid + "' ");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return "Failed To Register";
+    }
+
+    public String userEditDetails(UserBean userBean, String myuserid) {
+        String firstname = userBean.getFirstName();
+        String lastname = userBean.getLastName();
+        String email = userBean.getEmail();
+        String username = userBean.getUserName();
+        String contact = userBean.getContact();
+        String department = userBean.getDepartment();
+        String role = userBean.getRole();
+        userid = myuserid;
+
+        Connection conn = null;
+        Statement statement = null;
+
+        try {
+            conn = DBConnection.createConnection();
+            statement = conn.createStatement();
+
+            statement.executeQuery("UPDATE users SET firstname='" + firstname + "', lastname='" + lastname + "', email='" + email + "', username='" + username + "', contact='" + contact + "', department='" + department + "', role='" + role + "' WHERE userid='" + userid + "'");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return "Failed To Register";
+    }
+
+    public String userDelete(String myuserid) {
+        userid = myuserid;
+
+        Connection conn = null;
+        Statement statement = null;
+        int ex = 0;
+
+        try {
+            conn = DBConnection.createConnection();
+            statement = conn.createStatement();
+
+            ex = statement.executeUpdate("DELETE FROM users WHERE userid='" + userid + "'");
+
+            if (ex > 0) {
+                return "user was removed successfully";
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return "Something went wrong, please try again";
     }
 }
