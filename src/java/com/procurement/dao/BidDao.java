@@ -20,22 +20,27 @@ public class BidDao {
         String bidprice = bidBean.getBidPrice();
         String companyid = bidBean.getCompanyId();
         String tenderid = bidBean.getTenderId();
-        
+
         Connection conn = null;
         Statement statement = null;
+        int ex = 0;
 
         try {
             conn = DBConnection.createConnection();
             statement = conn.createStatement();
 
-            statement.executeUpdate("INSERT INTO bids (taxcompliance,financialhistory,techspec,bidprice,companyid,tenderid)"
+            ex = statement.executeUpdate("INSERT INTO bids (taxcompliance,financialhistory,techspec,bidprice,companyid,tenderid)"
                     + " VALUES ('" + taxcompliance + "','" + financialhistory + "','" + techspecs + "','" + bidprice + "','" + companyid + "','" + tenderid + "')");
+
+            if (ex > 0) {
+                return "You Have Successfully submitted the Bid";
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return "Failed to register";
+        return "Something went wrong, please try again";
     }
 
 }

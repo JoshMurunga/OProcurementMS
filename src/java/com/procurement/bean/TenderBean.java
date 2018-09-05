@@ -20,6 +20,7 @@ public class TenderBean implements Serializable {
     private String description;
     private String dateofpublication;
     private String tenderdocs;
+    private String status;
 
     public TenderBean() {
         title = "";
@@ -29,9 +30,10 @@ public class TenderBean implements Serializable {
         description = "";
         dateofpublication = "";
         tenderdocs = "";
+        status = "";
     }
     
-    public TenderBean(String title, String category, String opendate, String closingdate, String description, String dateofpublication, String tenderdocs){
+    public TenderBean(String title, String category, String opendate, String closingdate, String description, String dateofpublication, String tenderdocs, String status){
         this.title = title;
         this.category = category;
         this.opendate = opendate;
@@ -39,6 +41,7 @@ public class TenderBean implements Serializable {
         this.description = description;
         this.dateofpublication = dateofpublication;
         this.tenderdocs = tenderdocs;
+        this.status = status;
     }
     
     public void setTitle(String title) {
@@ -95,5 +98,13 @@ public class TenderBean implements Serializable {
 
     public String getTenderDocs() {
         return tenderdocs;
+    }
+    
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getStatus() {
+        return status;
     }
 }

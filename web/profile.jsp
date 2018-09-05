@@ -77,6 +77,13 @@
     <center>
         <div class="container">
             <div class="teal-text"><b>Your User Profile</b></div><br>
+            <% String message = request.getParameter("errMessage");
+                if (message == null) {
+                    message = "";
+                } else {
+            %>
+            <script type="text/javascript"> Materialize.toast("<%=message%>", 4000);</script>
+            <% }%>
             <div class="container" style="padding: 32px 30px 0px 30px; border: 1px solid #EEE; background: whitesmoke">
                 <table>
                     <c:forEach var = "row" items = "${result.rows}">
@@ -93,6 +100,10 @@
                             <td><c:out value = "${row.username}"/></td>
                         </tr>
                         <tr>
+                            <td class="teal-text"><b>Contact</b></td>
+                            <td><c:out value = "${row.contact}"/></td>
+                        </tr>
+                        <tr>
                             <td class="teal-text"><b>Email</b></td>
                             <td><c:out value = "${row.email}"/></td>
                             <td><a class="btn red waves-effect waves-light btn modal-trigger" href="#modal4">Edit</a></td>
@@ -107,17 +118,21 @@
                                 <div class="row">
                                     <form class="col s12" method="POST" action="<%=response.encodeURL("ControllerServlet")%>" id="editinfo" name="editinfo" enctype="multipart/form-data">
                                         <div class="row">
-                                            <div class="input-field col s12">
+                                            <div class="input-field col s6">
                                                 <input id="firstname" name="firstname" type="text" class="validate" value = "${row.firstname}" required>
                                                 <label for="firstname">First Name</label>
+                                            </div>
+                                            <div class="input-field col s6">
+                                                <input id="lastname" name="lastname" type="text" class="validate" value = "${row.lastname}" required>
+                                                <label for="lastname">Last Name</label>
                                             </div>
                                         </div>
                                         <input type="hidden" name="source" value= "update">
                                         <input type="hidden" name="userid" value="<%= hiddenid%>">
                                         <div class="row">
                                             <div class="input-field col s12">
-                                                <input id="lastname" name="lastname" type="text" class="validate" value = "${row.lastname}" required>
-                                                <label for="lastname">Last Name</label>
+                                                <input id="contact" name="contact" type="text" class="validate" value = "${row.contact}" required>
+                                                <label for="contact">Contact</label>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -136,48 +151,47 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" form="editinfo" class="waves-effect waves-teal btn green" name='editdetails'>Submit</button>
-                                <a href="#!" class="modal-action modal-close waves-effect waves-teal btn red">close</a>
-                            </div>
-                        </div>
-                        <div id="modal5" class="modal modal-fixed-footer">
-                            <div class="modal-content">
-                                <h5>Change Password</h5>
-                                <div class="row">
-                                    <form class="col s12" method="POST" action="<%=response.encodeURL("ControllerServlet")%>" id="editpass" name="editpass" enctype="multipart/form-data">
-                                        <div class="row">
-                                            <div class="input-field col s11">
-                                                <input id="password" name="password" type="password" class="validate" required>
-                                                <label for="password">Old Password</label>
-                                            </div>
-                                        </div>
-                                        <input type="hidden" name="source" value= "changepass">
-                                        <input type="hidden" name="userid" value="<%= hiddenid%>">
-                                        <div class="row">
-                                            <div class="input-field col s11">
-                                                <input id="newpassword" name="newpassword" type="password" class="validate" required>
-                                                <label for="newpassword">New Password</label>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="input-field col s11">
-                                                <input id="cpassword" name="cpassword" type="password" class="validate" required>
-                                                <label for="cpassword">Confirm Password</label>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="submit" form="editpass" class="waves-effect waves-teal btn green" name='editdetails'>Submit</button>
-                                <a href="#!" class="modal-action modal-close waves-effect waves-teal btn red">close</a>
+                                <button type="submit" form="editinfo" class="waves-effect waves-teal btn green" name='editdetails' onclick="return validateEditInfo()">Submit</button>
+                                <a class="modal-action modal-close waves-effect waves-teal btn red">close</a>
                             </div>
                         </div>
                     </c:forEach>
                 </table>
             </div>
+            <div id="modal5" class="modal modal-fixed-footer">
+                <div class="modal-content">
+                    <h5>Change Password</h5>
+                    <div class="row">
+                        <form class="col s12" method="POST" action="<%=response.encodeURL("ControllerServlet")%>" id="editpass" name="editpass" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="input-field col s11">
+                                    <input id="password" name="password" type="password" class="validate" required>
+                                    <label for="password">Old Password</label>
+                                </div>
+                            </div>
+                            <input type="hidden" name="source" value= "changepass">
+                            <input type="hidden" name="userid" value="<%= hiddenid%>">
+                            <div class="row">
+                                <div class="input-field col s11">
+                                    <input id="newpassword" name="newpassword" type="password" class="validate" required>
+                                    <label for="newpassword">New Password</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s11">
+                                    <input id="cpassword" name="cpassword" type="password" class="validate" required>
+                                    <label for="cpassword">Confirm Password</label>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" form="editpass" class="waves-effect waves-teal btn green" name='editdetails' onclick="return validateEditPass()">Submit</button>
+                    <a class="modal-action modal-close waves-effect waves-teal btn red">close</a>
+                </div>
+            </div>
         </div>
     </center>
-</main>
-
+</main>                          
 <jsp:include page="./includes/footer.jsp" />

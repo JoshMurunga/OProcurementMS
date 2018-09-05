@@ -17,9 +17,11 @@
                     <li id="module_supplier">
                         <a id="evaluate_page" class="waves-effect waves-teal" style="text-decoration: none;" href="<%=response.encodeURL("evaluation.jsp")%>">Evaluate Bids</a>
                     </li>
-
+                    <li id="module_approved">
+                        <a id="evaluate_page" class="waves-effect waves-teal" style="text-decoration: none;" href="<%=response.encodeURL("evaluated.jsp")%>">Complete Evaluated Bids</a>
+                    </li>
                     <li id="module_employee">
-                        <a class="waves-effect waves-teal" style="text-decoration: none;" href="#">Award Tender</a>
+                        <a id="evaluate_page" class="waves-effect waves-teal" style="text-decoration: none;" href="<%=response.encodeURL("assignedtenders.jsp")%>">Assigned Tenders</a>
                     </li>
                 </ul>
             </div>
@@ -40,7 +42,7 @@
             <div id="dash_profile_body" class="collapsible-body">
                 <ul>
                     <li id="profile_profile">
-                        <a class="waves-effect waves-teal" style="text-decoration: none;" href="#"><i class="material-icons">person_outline</i>Profile</a>
+                        <a class="waves-effect waves-teal" style="text-decoration: none;" href="<%=response.encodeURL("profile.jsp")%>"><i class="material-icons">person_outline</i>Profile</a>
                     </li>
                     <li id="profile_profile">
                         <a class="waves-effect waves-teal" style="text-decoration: none;" href="<%=response.encodeURL("LogoutServlet")%>"><i class="material-icons">exit_to_app</i>Logout</a>

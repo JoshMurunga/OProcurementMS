@@ -131,7 +131,7 @@ ul.side-nav .collapsible-header.active::after {
     height: 89% !important; 
 }
 
-#modal2 { 
+#modal2, #modal7 { 
     margin-left: 240px;
     width: 64% !important; 
     height: 77% !important; 
@@ -192,4 +192,8 @@ ul.side-nav .collapsible-header.active::after {
 
 #delete_mat_button{
     color: red;
+}
+
+#help:hover {
+    text-decoration: underline;
 }

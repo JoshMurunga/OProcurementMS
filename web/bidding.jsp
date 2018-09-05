@@ -20,20 +20,20 @@
     <br>
     <center>
         <div class="container">
-            <div class="teal-text"><b>Please complete company profile in order to submit bid</b></div><br>
+            <div class="teal-text"><b>Please fill in form to submit bid</b></div><br>
             <div class="container">
-                <form class="col s12" name="bids" action="<%=request.getContextPath()%>/ControllerServlet" method="post" enctype="multipart/form-data">
+                <form class="col s12" name="bids" id="bids" action="<%=request.getContextPath()%>/ControllerServlet" method="post" enctype="multipart/form-data" onsubmit="return validateBids()">
                     <div class="row">
                         <div class="input-field col s12">
                             <input id="bidprice" name="bidprice" type="text" class="validate">
-                            <label for="bidprice">Bidding Price</label>
+                            <label for="bidprice">Total Bidding Price</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="file-field input-field col s12">
                             <div class="btn orange"><span>Add File</span><input type="file" name="techspecs"></div>
                             <div class="file-path-wrapper">
-                                <input class="file-path validate" name="techspecs" type="text" placeholder="Upload Technical Specification Documents">
+                                <input class="file-path validate" id="techspecs" name="techspecs" type="text" placeholder="Upload Technical Specification Documents">
                             </div>
                         </div>
                     </div>
@@ -45,7 +45,7 @@
                         <div class="file-field input-field col s12">
                             <div class="btn orange"><span>Add File</span><input type="file" name="taxcompliance"></div>
                             <div class="file-path-wrapper">
-                                <input class="file-path validate" name="taxcompliance" type="text" placeholder="Upload Tax Compliance Documents">
+                                <input class="file-path validate" id="taxcompliance" name="taxcompliance" type="text" placeholder="Upload Tax Compliance Documents">
                             </div>
                         </div>
                     </div>
@@ -53,13 +53,13 @@
                         <div class="file-field input-field col s12">
                             <div class="btn orange"><span>Add File</span><input type="file" name="financialhistory"></div>
                             <div class="file-path-wrapper">
-                                <input class="file-path validate" name="financialhistory" type="text" placeholder="Upload Financial History Documents">
+                                <input class="file-path validate" id="financialhistory" name="financialhistory" type="text" placeholder="Upload Financial History Documents">
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
-                            <button class="btn col s12 waves-effect waves-light green" type="submit" name="action">Submit</button>
+                            <button class="btn col s12 waves-effect waves-light green" type="submit" onclick="return validateBids()" name="action">Submit</button>
                         </div>
                     </div>
                 </form>

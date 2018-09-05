@@ -174,27 +174,28 @@ public class ControllerServlet extends HttpServlet {
 
                 String register = userDao.userEditDetails(userBean, userid);
 
-                String encodedURL = response.encodeRedirectURL("users.jsp");
-                response.sendRedirect(encodedURL);
-
-            } else if (source.equals("delete")) {
-
-                String userid = req.getParameter("userid");
-                System.out.println(userid);
+                req.setAttribute("errMessage", register);
+                req.getRequestDispatcher("users.jsp").forward(req, response);
 
             } else if (source.equals("update")) {
 
                 String firstname = req.getParameter("firstname");
                 String lastname = req.getParameter("lastname");
                 String email = req.getParameter("email");
+                String contact = req.getParameter("contact");
                 String userid = req.getParameter("userid");
 
                 userBean.setFirstName(firstname);
                 userBean.setLastName(lastname);
                 userBean.setEmail(email);
+                userBean.setContact(contact);
 
                 String register = userDao.userUpdate(userBean, userid);
-                String encodedURL = response.encodeRedirectURL("profile.jsp");
+
+                Cookie userName = new Cookie("LOGIN_USER", userBean.getUserName());
+                userName.setMaxAge(60 * 60 * 24);
+                response.addCookie(userName);
+                String encodedURL = response.encodeRedirectURL("profile.jsp?errMessage="+register);
                 response.sendRedirect(encodedURL);
 
             } else if (source.equals("changepass")) {
@@ -203,8 +204,9 @@ public class ControllerServlet extends HttpServlet {
                 String userid = req.getParameter("userid");
 
                 String register = userDao.userNewPassword(userBean, newpassword, userid);
-                String encodedURL = response.encodeRedirectURL("profile.jsp");
-                response.sendRedirect(encodedURL);
+
+                req.setAttribute("errMessage", register);
+                req.getRequestDispatcher("profile.jsp").forward(req, response);
 
             } else if (source.equals("resetpass")) {
 
@@ -212,8 +214,9 @@ public class ControllerServlet extends HttpServlet {
                 String userid = req.getParameter("userid");
 
                 String register = userDao.userResetPassword(newpassword, userid);
-                String encodedURL = response.encodeRedirectURL("profile.jsp");
-                response.sendRedirect(encodedURL);
+
+                req.setAttribute("errMessage", register);
+                req.getRequestDispatcher("login.jsp").forward(req, response);
 
             } else if (source.equals("supregister")) {
 
@@ -286,6 +289,40 @@ public class ControllerServlet extends HttpServlet {
                 req.setAttribute("errMessage", store);
                 req.getRequestDispatcher("dptrequisitions.jsp").forward(req, response);
 
+            } else if (source.equals("editrequisition")) {
+
+                String item = req.getParameter("item");
+                String category = req.getParameter("category");
+                String units = req.getParameter("units");
+                String unitprice = req.getParameter("unitprice");
+                String quantity = req.getParameter("quantity");
+                String totalprice = req.getParameter("totalprice");
+                String requisitionid = req.getParameter("requisitionid");
+
+                String savePath = "E:\\PROGRAMMING\\NetBeansProjects\\OProcurementMS\\web\\WEB-INF" + File.separator + REQ_DIR;
+                File fileSaveDir = new File(savePath);
+                Part part = req.getPart("eddescription");
+                String fileName = extractFileName(part);
+                part.write(savePath + File.separator + fileName);
+                String description = savePath + File.separator + fileName;
+
+                RequisitionBean requ = new RequisitionBean();
+
+                requ.setItem(item);
+                requ.setCategory(category);
+                requ.setUnits(units);
+                requ.setUnitPrice(unitprice);
+                requ.setQuantity(quantity);
+                requ.setTotalPrice(totalprice);
+                requ.setDescription(description);
+
+                RequisitionDao reqDao = new RequisitionDao();
+
+                String store = reqDao.reqEdit(requ, requisitionid);
+
+                req.setAttribute("errMessage", store);
+                req.getRequestDispatcher("dptrequisitions.jsp").forward(req, response);
+
             } else if (source.equals("tenders")) {
 
                 String title = req.getParameter("title");
@@ -293,6 +330,7 @@ public class ControllerServlet extends HttpServlet {
                 String opendate = req.getParameter("opendate");
                 String closingdate = req.getParameter("closingdate");
                 String description = req.getParameter("description");
+                String status = req.getParameter("status");
 
                 String savePath = "E:\\PROGRAMMING\\NetBeansProjects\\OProcurementMS\\web\\WEB-INF" + File.separator + TEN_DIR;
                 File fileSaveDir = new File(savePath);
@@ -309,10 +347,45 @@ public class ControllerServlet extends HttpServlet {
                 ten.setClosingDate(closingdate);
                 ten.setDescription(description);
                 ten.setTenderDocs(tenderdocs);
+                ten.setStatus(status);
 
                 TenderDao tenDao = new TenderDao();
 
                 String newTender = tenDao.addTender(ten);
+
+                req.setAttribute("errMessage", newTender);
+                req.getRequestDispatcher("tenders.jsp").forward(req, response);
+
+            } else if (source.equals("edittenders")) {
+
+                String title = req.getParameter("title");
+                String category = req.getParameter("category");
+                String opendate = req.getParameter("opendate");
+                String closingdate = req.getParameter("closingdate");
+                String description = req.getParameter("description");
+                String status = req.getParameter("status");
+                String tenderid = req.getParameter("tenderid");
+
+                String savePath = "E:\\PROGRAMMING\\NetBeansProjects\\OProcurementMS\\web\\WEB-INF" + File.separator + TEN_DIR;
+                File fileSaveDir = new File(savePath);
+                Part part = req.getPart("edittenderdocs");
+                String fileName = extractFileName(part);
+                part.write(savePath + File.separator + fileName);
+                String tenderdocs = savePath + File.separator + fileName;
+
+                TenderBean ten = new TenderBean();
+
+                ten.setTitle(title);
+                ten.setCategory(category);
+                ten.setOpenDate(opendate);
+                ten.setClosingDate(closingdate);
+                ten.setDescription(description);
+                ten.setTenderDocs(tenderdocs);
+                ten.setStatus(status);
+
+                TenderDao tenDao = new TenderDao();
+
+                String newTender = tenDao.editTender(ten, tenderid);
 
                 req.setAttribute("errMessage", newTender);
                 req.getRequestDispatcher("tenders.jsp").forward(req, response);
@@ -347,8 +420,9 @@ public class ControllerServlet extends HttpServlet {
                 CompanyDao comDao = new CompanyDao();
 
                 String newCom = comDao.addCompany(com);
-                String encodedURL = response.encodeRedirectURL("supdash.jsp");
-                response.sendRedirect(encodedURL);
+
+                req.setAttribute("errMessage", newCom);
+                req.getRequestDispatcher("supdash.jsp").forward(req, response);
 
             } else if (source.equals("bids")) {
 
@@ -385,8 +459,9 @@ public class ControllerServlet extends HttpServlet {
                 BidDao bidDao = new BidDao();
 
                 String newBid = bidDao.addBid(bid);
-                String encodedURL = response.encodeRedirectURL("supdash.jsp");
-                response.sendRedirect(encodedURL);
+
+                req.setAttribute("errMessage", newBid);
+                req.getRequestDispatcher("supdash.jsp").forward(req, response);
 
             } else if (source.equals("addmember")) {
 
@@ -441,8 +516,9 @@ public class ControllerServlet extends HttpServlet {
                 EvaluationDao evalDao = new EvaluationDao();
 
                 String newEvaluation = evalDao.addEvaluation(eval);
-                String encodedURL = response.encodeRedirectURL("evaluation.jsp");
-                response.sendRedirect(encodedURL);
+
+                req.setAttribute("errMessage", newEvaluation);
+                req.getRequestDispatcher("evaluation.jsp").forward(req, response);
 
             } else if (source.equals("publish")) {
 
@@ -492,6 +568,17 @@ public class ControllerServlet extends HttpServlet {
             req.setAttribute("errMessage", register);
             req.getRequestDispatcher("users.jsp").forward(req, response);
 
+        } else if (source.equals("deltender")) {
+
+            String userid = req.getParameter("tenderid");
+
+            TenderDao tenDao = new TenderDao();
+
+            String remTender = tenDao.delTender(userid);
+
+            req.setAttribute("errMessage", remTender);
+            req.getRequestDispatcher("tenders.jsp").forward(req, response);
+
         } else if (source.equals("reqdel")) {
 
             String requisitionid = req.getParameter("id");
@@ -529,8 +616,9 @@ public class ControllerServlet extends HttpServlet {
             EvaluationDao evalDao = new EvaluationDao();
 
             String publish = evalDao.acceptAward(awardid);
-            String encodedURL = response.encodeRedirectURL("award.jsp");
-            response.sendRedirect(encodedURL);
+            
+            req.setAttribute("errMessage", publish);
+            req.getRequestDispatcher("award.jsp").forward(req, response);
 
         } else if (source.equals("decline")) {
 
@@ -539,8 +627,9 @@ public class ControllerServlet extends HttpServlet {
             EvaluationDao evalDao = new EvaluationDao();
 
             String publish = evalDao.declineAward(awardid);
-            String encodedURL = response.encodeRedirectURL("award.jsp");
-            response.sendRedirect(encodedURL);
+            
+            req.setAttribute("errMessage", publish);
+            req.getRequestDispatcher("award.jsp").forward(req, response);
 
         }
 

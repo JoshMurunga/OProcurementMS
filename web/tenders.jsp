@@ -64,6 +64,14 @@
                             <textarea id="description" name="description" class="materialize-textarea"></textarea>
                             <label for="description">Brief Description</label>
                         </div>
+                        <div class="input-field col s6">
+                            <select id="status" name="status" >
+                                <option value="" disabled selected>Select Tender Status</option>
+                                <option value="open">Open</option>
+                                <option value="pending">Pending</option>
+                            </select>
+                            <label for="status">Status</label>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -98,6 +106,8 @@
                     <th>Closing Date</th>
                     <th>Status</th>
                     <th>Tender Documents</th>
+                    <th></th>
+                    <th></th>
                 </tr>
             </thead>
 
@@ -110,11 +120,76 @@
                         <td><fmt:formatDate type="date" value = "${row.opendate}"/></td>
                         <td><fmt:formatDate type="date" value = "${row.closingdate}"/></td>
                         <td><c:out value = "${row.status}"/></td>
-                        <td><a class="waves-effect waves-light btn orange" href="download?source=tender&id=${row.tenderid}">Download</a></td>
+                        <td><a class="waves-effect waves-light btn orange tooltipped" data-position="bottom" data-tooltip="Download" href="download?source=tender&id=${row.tenderid}"><i class="material-icons">file_download</i></a></td>
+                        <td><a id="edit_mat_button" class="modal-trigger tooltipped" data-position="bottom" data-tooltip="Edit" href="#modal7" data-tenderid="${row.tenderid}" data-title="${row.title}" data-opendate="${row.opendate}" data-closingdate="${row.closingdate}" data-description="${row.description}"><i class="material-icons ">edit</i></a></td>
+                        <td><a id="delete_mat_button" class="tooltipped" data-position="bottom" data-tooltip="Remove" onclick="return tenDeleter()" href="<%=response.encodeURL("ControllerServlet")%>?source=deltender&tenderid=${row.tenderid}"><i class="material-icons">delete</i></a></td>
                     </tr>
                 </c:forEach>
             </tbody>
         </table>
+    </div>
+    <div id="modal7" class="modal modal-fixed-footer">
+        <div class="modal-content">
+            <h5>Edit Tender Details</h5>
+            <div class="row">
+                <form class="col s12" method="POST" action="<%=response.encodeURL("ControllerServlet")%>" id="edittender" name="edittender" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input id="title" name="title" type="text" placeholder="name" class="validate" required>
+                            <label for="title">Title</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <select id="category" name="category" >
+                                <option value="" disabled selected>Select Category</option>
+                                <option value="Electronics">Electronics</option>
+                                <option value="Funiture">Furniture</option>
+                                <option value="Stationery">Stationery</option>
+                                <option value="Construction">Construction</option>
+                                <option value="Food and Nutrition">Food and Nutrition</option>
+                                <option value="Sanitation">Sanitation</option>
+                            </select>
+                            <label for="category">Category</label>
+                        </div>
+                    </div>
+                    <input type="hidden" name="source" value= "edittenders">
+                    <input type="hidden" name="tenderid" >
+                    <div class="row">
+                        <div class="input-field col s3">
+                            <input id="opendate" name="opendate" type="text" placeholder="name" class="datepicker" required>
+                            <label for="opendate">Opening Date</label>
+                        </div>
+                        <div class="input-field col s3">
+                            <input id="closingdate" name="closingdate" type="text" placeholder="name" class="datepicker" required>
+                            <label for="closingdate">Closing Date</label>
+                        </div>
+                        <div class="file-field input-field col s6">
+                            <div class="btn orange"><span>Add File</span><input type="file" name="edittenderdocs"></div>
+                            <div class="file-path-wrapper">
+                                <input class="file-path validate" id="edittenderdocs" name="edittenderdocs" type="text" placeholder="Upload Tender Documents" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <textarea id="description" name="description" placeholder="name" class="materialize-textarea"></textarea>
+                            <label for="description">Brief Description</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <select id="status" name="status" >
+                                <option value="" disabled selected>Select Tender Status</option>
+                                <option value="open">Open</option>
+                                <option value="pending">Pending</option>
+                            </select>
+                            <label for="status">Status</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" form="edittender" class="waves-effect waves-teal btn green" name='tender' onclick="return validateEditTender()">Submit</button>
+            <a class="modal-action modal-close waves-effect waves-teal btn red">close</a>
+        </div>
     </div>
 </main>
 

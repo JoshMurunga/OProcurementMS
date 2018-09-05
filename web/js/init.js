@@ -31,9 +31,29 @@
                 modal.find('input[name="userid"]').val(trigger.data('userid'));
             }
         });
+        $('#modal7').modal({
+            ready: function (modal, trigger) {
+                modal.find('input[name="tenderid"]').val(trigger.data('tenderid'));
+                modal.find('input[name="title"]').val(trigger.data('title'));
+                modal.find('input[name="opendate"]').val(trigger.data('opendate'));
+                modal.find('input[name="closingdate"]').val(trigger.data('closingdate'));
+                modal.find('textarea[name="description"]').val(trigger.data('description'));
+            }
+        });
+        $('#modal8').modal({
+            ready: function (modal, trigger) {
+                modal.find('input[name="item"]').val(trigger.data('item'));
+                modal.find('input[name="units"]').val(trigger.data('units'));
+                modal.find('input[name="unitprice"]').val(trigger.data('unitprice'));
+                modal.find('input[name="quantity"]').val(trigger.data('quantity'));
+                modal.find('input[name="totalprice"]').val(trigger.data('totalprice'));
+                modal.find('input[name="requisitionid"]').val(trigger.data('requisitionid'));
+            }
+        });
         $('select').material_select();
         $('.collapsible').collapsible();
         $('.parallax').parallax();
+        $('.tooltipped').tooltip();
 
         var url = window.location;
         $('ul.nav a').filter(function () {
@@ -43,36 +63,87 @@
         $('#sucu_select').on('change', function () {
             $('#sucu').val($('#sucu_select').val());
         });
-        
-        if($('#module_supplier').hasClass('active')){
+
+        if ($('#module_supplier').hasClass('active')) {
             $('#dash_module_header').addClass('active');
             $('#dash_module_body').css('display', 'block');
         }
-        
-        if($('#tender_manage').hasClass('active')){
+
+        if ($('#module_approved').hasClass('active')) {
+            $('#dash_module_header').addClass('active');
+            $('#dash_module_body').css('display', 'block');
+        }
+
+        if ($('#module_employee').hasClass('active')) {
+            $('#dash_module_header').addClass('active');
+            $('#dash_module_body').css('display', 'block');
+        }
+
+        if ($('#module_closed').hasClass('active')) {
+            $('#dash_module_header').addClass('active');
+            $('#dash_module_body').css('display', 'block');
+        }
+
+        if ($('#tender_manage').hasClass('active')) {
             $('#tender_manage_header').addClass('active');
             $('#tender_manage_body').css('display', 'block');
         }
-        
-        if($('#tender_bids').hasClass('active')){
+
+        if ($('#tender_bids').hasClass('active')) {
             $('#tender_bids_header').addClass('active');
             $('#tender_bids_body').css('display', 'block');
         }
-        
-        if($('#add_evaluation').hasClass('active')){
+
+        if ($('#published_bids').hasClass('active')) {
+            $('#tender_bids_header').addClass('active');
+            $('#tender_bids_body').css('display', 'block');
+        }
+
+        if ($('#tender_awards').hasClass('active')) {
+            $('#tender_bids_header').addClass('active');
+            $('#tender_bids_body').css('display', 'block');
+        }
+
+        if ($('#add_evaluation').hasClass('active')) {
             $('#add_evaluation_header').addClass('active');
             $('#add_evaluation_body').css('display', 'block');
         }
-        
-        if($('#user_manage').hasClass('active')){
+
+        if ($('#user_manage').hasClass('active')) {
             $('#user_manage_header').addClass('active');
             $('#user_manage_body').css('display', 'block');
         }
-        
-        if($('#department_requisition').hasClass('active')){
+
+        if ($('#department_requisition').hasClass('active')) {
             $('#department_requisition_header').addClass('active');
             $('#department_requisition_body').css('display', 'block');
         }
 
+        if ($('#approved_requisition').hasClass('active')) {
+            $('#department_requisition_header').addClass('active');
+            $('#department_requisition_body').css('display', 'block');
+        }
+
+        if ($('#declined_requisition').hasClass('active')) {
+            $('#department_requisition_header').addClass('active');
+            $('#department_requisition_body').css('display', 'block');
+        }
+
+        if ($('#module_notification').hasClass('active')) {
+            $('#module_notification_header').addClass('active');
+            $('#module_notification_body').css('display', 'block');
+        }
+
+        if ($('#module_accept').hasClass('active')) {
+            $('#module_notification_header').addClass('active');
+            $('#module_notification_body').css('display', 'block');
+        }
+
+        if ($('#module_decline').hasClass('active')) {
+            $('#module_notification_header').addClass('active');
+            $('#module_notification_body').css('display', 'block');
+        }
+
+        
     }); // end of document ready
 })(jQuery); // end of jQuery name space

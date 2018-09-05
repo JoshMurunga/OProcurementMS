@@ -11,7 +11,7 @@
 <%@page import="java.sql.Connection"%>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c"%>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/sql" prefix = "sql"%>
-<% String title = "Requisitions";%>
+<% String title = "Declined Requisitions";%>
 <jsp:include page="./includes/header.jsp"><jsp:param name="title" value="<%= title%>"/></jsp:include>
 <jsp:include page="./includes/dashnav.jsp" />
 <%
@@ -64,75 +64,12 @@
 %>
 <main id="maindash">
     <jsp:include page="./includes/dptdashnav.jsp" />
-    <center><div class="green-text" style="font-size: 20; margin-top: 8px"><b>DEPARTMENT REQUISITIONS</b><a class="waves-effect waves-light btn modal-trigger right red" id="butt_stats" href="#modal1"><i class="material-icons right">add</i>add new requisition</a></div></center>
-    <div id="modal1" class="modal modal-fixed-footer">
-        <div class="modal-content">
-            <h5>Fill in form to add new requisition</h5>
-            <div class="row">
-                <form class="col s12" method="POST" action="<%=response.encodeURL("ControllerServlet")%>" id="requisitionform" name="requisitionform" enctype="multipart/form-data" onsubmit="return validateReq()">
-                    <div class="row">
-                        <div class="input-field col s6">
-                            <input id="item" name="item" type="text" class="validate">
-                            <label for="item">Item</label>
-                        </div>
-                        <div class="input-field col s6">
-                            <select id="category" name="category" >
-                                <option value="" disabled selected>Select Category</option>
-                                <option value="Electronics">Electronics</option>
-                                <option value="Funiture">Furniture</option>
-                                <option value="Stationery">Stationery</option>
-                                <option value="Construction">Construction</option>
-                                <option value="Food and Nutrition">Food and Nutrition</option>
-                                <option value="Sanitation">Sanitation</option>
-                            </select>
-                            <label for="category">Category</label>
-                        </div>
-                    </div>
-                    <input type="hidden" name="source" value= "requisition">
-                    <input type="hidden" name="hiddenid" value="<%= hiddenid%>">
-                    <div class="row">
-                        <div class="input-field col s6">
-                            <input id="units" name="units" type="text" class="validate">
-                            <label for="units">Units of Measure</label>
-                        </div>
-                        <div class="input-field col s6">
-                            <input id="unitprice" name="unitprice" type="text" class="validate">
-                            <label for="unitprice">Price Per Unit</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s6">
-                            <input id="quantity" name="quantity" type="text" class="validate">
-                            <label for="quantity">Quantity</label>
-                        </div>
-                        <div class="input-field col s6">
-                            <input id="totalprice" name="totalprice" type="text" class="validate">
-                            <label for="totalprice">Total Price</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="file-field input-field col s6">
-                            <div class="btn red"><span>Add Description File</span><input type="file" name="description"></div>
-                            <div class="file-path-wrapper">
-                                <input class="file-path validate" id="description" name="description" type="text" placeholder="Upload description file">
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button type="submit" form="requisitionform" class="waves-effect waves-teal green btn" name='editdetails' onclick="return validateReq()">Submit</button>
-            <a class="modal-action modal-close waves-effect waves-teal red btn">close</a>
-        </div>
-    </div>
-
-    <br>
+    <center><div class="green-text" style="font-size: 20; margin-top: 8px"><b>DECLINED REQUISITIONS</b></div></center>
     <sql:setDataSource var = "requisition" driver = "org.postgresql.Driver"
                        url = "jdbc:postgresql://localhost:5432/opms"
                        user = "postgres"  password = "1234"/>
     <sql:query  dataSource = "${requisition}" var = "result">
-        SELECT * FROM requisitions WHERE userid=<%= hiddenid%> AND status = 'pending';
+        SELECT * FROM requisitions WHERE userid=<%= hiddenid%> AND status = 'declined';
     </sql:query>
     <div id="table_stats" class="container z-depth-2">
         <table class="striped dataTabularized" id="clips_table">
@@ -154,7 +91,6 @@
                     <th>Description</th>
                     <th>Status</th>
                     <th></th>
-                    <th></th>
                 </tr>
             </thead>
 
@@ -169,8 +105,7 @@
                         <td><c:out value = "${row.category}"/></td>
                         <td><a class="btn waves-effect waves-teal green" href="download?source=requisition&id=${row.requisitionid}" >Download file</a></td>
                         <td><c:out value = "${row.status}"/></td>
-                        <td><a id="edit_mat_button" class="modal-trigger tooltipped" data-position="bottom" data-tooltip="Edit" href="#modal8" data-requisitionid="${row.requisitionid}" data-item="${row.item}" data-units="${row.units}" data-unitprice="${row.priceperunit}" data-quantity="${row.quantity}" data-totalprice="${row.totalprice}"><i class="material-icons ">edit</i></a></td>
-                        <td><a id="delete_mat_button" class="tooltipped" data-position="bottom" data-tooltip="Remove" onclick="return remover()" href="<%=response.encodeURL("ControllerServlet")%>?source=reqdel&id=${row.requisitionid}"><i class="material-icons">delete</i></a></td>
+                        <td><a class="btn modal-trigger tooltipped" data-position="bottom" data-tooltip="Resend" href="#modal8" data-requisitionid="${row.requisitionid}" data-item="${row.item}" data-units="${row.units}" data-unitprice="${row.priceperunit}" data-quantity="${row.quantity}" data-totalprice="${row.totalprice}"><i class="material-icons ">send</i></a></td>
                     </tr>
                 </c:forEach>
             </tbody>

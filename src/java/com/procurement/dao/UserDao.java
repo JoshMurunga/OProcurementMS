@@ -107,7 +107,7 @@ public class UserDao {
             e.printStackTrace();
         }
 
-        return "Failed To Register";
+        return "Something went wrong, please try again";
     }
 
     public String userUpdate(UserBean userBean, String myuserid) {
@@ -115,22 +115,50 @@ public class UserDao {
         String lastname = userBean.getLastName();
         String email = userBean.getEmail();
         String username = userBean.getUserName();
+        String contact = userBean.getContact();
         userid = myuserid;
 
         Connection conn = null;
         Statement statement = null;
+        ResultSet resultSet = null;
+        int ex = 0;
+        String usernameDB = null;
+        String emailDB = null;
+        int count = 0;
 
         try {
             conn = DBConnection.createConnection();
             statement = conn.createStatement();
 
-            statement.executeUpdate("UPDATE users SET firstname='" + firstname + "', lastname='" + lastname + "', email='" + email + "', username='" + username + "' WHERE userid ='" + userid + "' ");
+            resultSet = statement.executeQuery("SELECT * FROM users WHERE username='" + username + "' OR email='" + email + "'");
+
+            while (resultSet.next()) {
+                usernameDB = resultSet.getString("username");
+                emailDB = resultSet.getString("email");
+                ++count;
+            }
+
+            if (count > 0) {
+                if (usernameDB.equals(username)) {
+                    return "The username you entered already exists in the system";
+                } else if (emailDB.equals(email)) {
+                    return "The email you entered already exists in the system";
+                }
+            } else {
+
+                ex = statement.executeUpdate("UPDATE users SET firstname='" + firstname + "', lastname='" + lastname + "', email='" + email + "', username='" + username + "', contact='" + contact + "' WHERE userid ='" + userid + "' ");
+
+                if (ex > 0) {
+                    return "You have successfully updated your profile";
+                }
+
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return "Failed To Register";
+        return "Something went wrong, please try again";
     }
 
     public String userNewPassword(UserBean userBean, String newpass, String myuserid) throws NoSuchAlgorithmException, InvalidKeySpecException {
@@ -144,6 +172,7 @@ public class UserDao {
         String passwordDB = null;
         String roleDB = null;
         int count = 0;
+        int ex = 0;
 
         try {
             conn = DBConnection.createConnection();
@@ -160,8 +189,14 @@ public class UserDao {
 
                 if (authen.validatePassword(password, passwordDB)) {
 
-                    statement.executeUpdate("UPDATE users SET password='" + newpassword + "' WHERE userid ='" + userid + "' ");
+                    ex = statement.executeUpdate("UPDATE users SET password='" + newpassword + "' WHERE userid ='" + userid + "' ");
 
+                    if (ex > 0) {
+                        return "You have successfully changed your password";
+                    }
+
+                } else {
+                    return "The old password you entered was wrong. Your new password has not been set";
                 }
 
             }
@@ -170,7 +205,7 @@ public class UserDao {
             e.printStackTrace();
         }
 
-        return "Failed To Register";
+        return "Something went wrong, please try again";
     }
 
     public String userResetPassword(String newpass, String myuserid) throws NoSuchAlgorithmException, InvalidKeySpecException {
@@ -206,18 +241,23 @@ public class UserDao {
 
         Connection conn = null;
         Statement statement = null;
+        int ex = 0;
 
         try {
             conn = DBConnection.createConnection();
             statement = conn.createStatement();
 
-            statement.executeQuery("UPDATE users SET firstname='" + firstname + "', lastname='" + lastname + "', email='" + email + "', username='" + username + "', contact='" + contact + "', department='" + department + "', role='" + role + "' WHERE userid='" + userid + "'");
+            ex = statement.executeUpdate("UPDATE users SET firstname='" + firstname + "', lastname='" + lastname + "', email='" + email + "', username='" + username + "', contact='" + contact + "', department='" + department + "', role='" + role + "' WHERE userid='" + userid + "'");
+
+            if (ex > 0) {
+                return "User Edited Successfully";
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return "Failed To Register";
+        return "Something went wrong, please try again";
     }
 
     public String userDelete(String myuserid) {

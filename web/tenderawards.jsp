@@ -8,7 +8,7 @@
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c"%>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/sql" prefix = "sql"%>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/fmt" prefix = "fmt"%>
-<% String title = "Publish";%>
+<% String title = "Tender Awards";%>
 <jsp:include page="./includes/header.jsp"><jsp:param name="title" value="<%= title%>"/></jsp:include>
 <jsp:include page="./includes/dashnav.jsp" />
 <%
@@ -22,9 +22,9 @@
                        url = "jdbc:postgresql://localhost:5432/opms"
                        user = "postgres"  password = "1234"/>
     <sql:query  dataSource = "${tenders}" var = "result">
-        SELECT tenders.tenderid, tenders.title, tenders.description, tenders.opendate, tenders.closingdate, tenders.tenderdocs FROM tenders INNER JOIN evaluationlot ON tenders.tenderid = evaluationlot.tenderid WHERE evaluationlot.publish = false GROUP BY tenders.tenderid;
+        SELECT awardtender.status, awardtender.awarddate, company.companyname, tenders.title, tenders.description FROM awardtender INNER JOIN tenders ON awardtender.tenderid = tenders.tenderid INNER JOIN company ON awardtender.companyid = company.companyid;
     </sql:query>
-    <center><div class="green-text" style="font-size: 20; margin-top: 8px"><b>EVALUATED TENDER BIDS MANAGEMENT</b></div></center>
+    <center><div class="green-text" style="font-size: 20; margin-top: 8px"><b>TENDER AWARDS</b></div></center>
     <div id="table_stats" class="container z-depth-2">
         <% String message = (String) request.getAttribute("errMessage");
             if (message == null) {
@@ -38,10 +38,8 @@
                 <tr>
                     <th>Tender Title</th>
                     <th>Tender Description</th>
-                    <th>Opening Date</th>
-                    <th>Closing Date</th>
-                    <th>Tender Documents</th>
-                    <th>View & Publish Result</th>
+                    <th>Company Name</th>
+                    <th>Award Date</th>
                 </tr>
             </thead>
 
@@ -50,10 +48,8 @@
                     <tr>
                         <td><c:out value = "${row.title}"/></td>
                         <td><c:out value = "${row.description}"/></td>
-                        <td><fmt:formatDate type="date" value = "${row.opendate}"/></td>
-                        <td><fmt:formatDate type="date" value = "${row.closingdate}"/></td>
-                        <td><a class="waves-effect waves-light btn green" href="download?source=tender&id=${row.tenderid}">Download</a></td>
-                        <td><a href="<%=response.encodeURL("bids.jsp")%>?id=${row.tenderid}" class="btn red">View <i class="material-icons right">send</i></a></td>
+                        <td><c:out value = "${row.companyname}"/></td>
+                        <td><fmt:formatDate type="date" value = "${row.awarddate}"/></td>
                     </tr>
                 </c:forEach>
             </tbody>

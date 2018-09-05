@@ -6,7 +6,6 @@
 package com.procurement.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -24,13 +23,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import com.util.database.DBConnection;
-import com.procurement.controller.AuthenticationServlet;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  *
  * @author Josh Murunga
@@ -48,6 +41,7 @@ public class EmailServlet extends HttpServlet {
         Statement statement = null;
         ResultSet resultSet = null;
         int count = 0;
+        int ex = 0;
 
         try {
             conn = DBConnection.createConnection();
@@ -90,12 +84,24 @@ public class EmailServlet extends HttpServlet {
 
                     Transport.send(message);
 
-                    statement.executeQuery("INSERT INTO passwordreset (email,token,timestamp) VALUES ('"+email+"','"+token+"',now()::timestamp(0))");
+                    ex = statement.executeUpdate("INSERT INTO passwordreset (email,token,timestamp) VALUES ('" + email + "','" + token + "',now()::timestamp(0))");
+
+                    if (ex > 0) {
+                        request.setAttribute("errMessage", "Please check your email for your password reset link");
+                        request.getRequestDispatcher("login.jsp").forward(request, response);
+                    } else {
+                        request.setAttribute("errMessage", "Somethingwent wrong, please try again");
+                        request.getRequestDispatcher("forgotpass.jsp").forward(request, response);
+                    }
 
                 } catch (MessagingException e) {
-                    throw new RuntimeException(e);
+                    request.setAttribute("errMessage", "Connection Timed Out, Please Try Again");
+                    request.getRequestDispatcher("forgotpass.jsp").forward(request, response);
                 }
 
+            } else {
+                request.setAttribute("errMessage", "The Email you have entered does not exist in the system");
+                request.getRequestDispatcher("forgotpass.jsp").forward(request, response);
             }
 
         } catch (SQLException e) {
@@ -105,10 +111,10 @@ public class EmailServlet extends HttpServlet {
     }
 
     protected String getSaltString() {
-        String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        String SALTCHARS = "QWERTYUIOPASDFGHJKLZXCVBNMmnbvcxzlkjhgfdsapoiuytrewq1234567890";
         StringBuilder salt = new StringBuilder();
         Random rnd = new Random();
-        while (salt.length() < 18) { // length of the random string.
+        while (salt.length() < 21) { // length of the random string.
             int index = (int) (rnd.nextFloat() * SALTCHARS.length());
             salt.append(SALTCHARS.charAt(index));
         }

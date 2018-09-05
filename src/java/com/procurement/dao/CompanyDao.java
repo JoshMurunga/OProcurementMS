@@ -25,21 +25,26 @@ public class CompanyDao {
         String address = comBean.getAddress();
         String userid = comBean.getUserId();
         String pincertificate = comBean.getPinCertificate();
-        
+
         Connection conn = null;
         Statement statement = null;
-        
+        int ex = 0;
+
         try {
             conn = DBConnection.createConnection();
             statement = conn.createStatement();
 
-            statement.executeUpdate("INSERT INTO company (companyname,contact,email,postaladdress,location,userid,pincertificate)"
+            ex = statement.executeUpdate("INSERT INTO company (companyname,contact,email,postaladdress,location,userid,pincertificate)"
                     + " VALUES ('" + companyname + "','" + contact + "','" + email + "','" + address + "','" + location + "','" + userid + "','" + pincertificate + "')");
+
+            if (ex > 0) {
+                return "You have successfully submitted company profile. You can now submit bid";
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return "Failed To Register";
+        return "Something went wrong, please try again";
     }
 }

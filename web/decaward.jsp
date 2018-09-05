@@ -11,7 +11,8 @@
 <%@page import="java.sql.Connection"%>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c"%>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/sql" prefix = "sql"%>
-<% String title = "Notifications";%>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/fmt" prefix = "fmt"%>
+<% String title = "Declined Awards";%>
 <jsp:include page="./includes/header.jsp"><jsp:param name="title" value="<%= title%>"/></jsp:include>
 <jsp:include page="./includes/dashnav.jsp" />
 <%
@@ -68,24 +69,18 @@
                        url = "jdbc:postgresql://localhost:5432/opms"
                        user = "postgres"  password = "1234"/>
     <sql:query  dataSource = "${requisition}" var = "result">
-        SELECT awardtender.awardid, awardtender.message, tenders.title FROM awardtender INNER JOIN tenders ON awardtender.tenderid = tenders.tenderid INNER JOIN company ON awardtender.companyid = company.companyid INNER JOIN users ON company.userid = users.userid WHERE company.userid=<%=hiddenid%> AND awardtender.status='pending';
+        SELECT tenders.tenderid, tenders.title, tenders.description, tenders.opendate, tenders.closingdate FROM awardtender INNER JOIN tenders ON awardtender.tenderid = tenders.tenderid INNER JOIN company ON awardtender.companyid = company.companyid INNER JOIN users ON company.userid = users.userid WHERE company.userid=<%=hiddenid%> AND awardtender.status='declined';
     </sql:query>
-    <center><div class="green-text" style="font-size: 20; margin-top: 8px"><b>NOTIFICATION AREA</b></div></center>
+    <center><div class="green-text" style="font-size: 20; margin-top: 8px"><b>DECLINED TENDER AWARDS</b></div></center>
     <div id="table_stats" class="container z-depth-2">
-        <% String message = (String) request.getAttribute("errMessage");
-            if (message == null) {
-                message = "";
-            } else {
-        %>
-        <script type="text/javascript"> Materialize.toast("<%=message%>", 4000);</script>
-        <% }%>
         <table class="striped dataTabularized" id="clips_table">
             <thead>
                 <tr>
                     <th>Tender Title</th>
-                    <th>Message</th>
-                    <th></th>
-                    <th></th>
+                    <th>Description</th>
+                    <th>Opening Date</th>
+                    <th>Closing Date</th>
+                    <th>Tender Documents</th>
                 </tr>
             </thead>
 
@@ -93,9 +88,10 @@
                 <c:forEach var = "row" items = "${result.rows}">
                     <tr>
                         <td><c:out value = "${row.title}"/></td>
-                        <td><c:out value = "${row.message}"/></td>
-                        <td><a class="btn green" onclick="return confirmAccept()" href="<%=response.encodeURL("ControllerServlet")%>?source=accept&awardid=${row.awardid}">Accept Award</a></td>
-                        <td><a class="btn red" onclick="return confirmDecline()" href="<%=response.encodeURL("ControllerServlet")%>?source=decline&awardid=${row.awardid}">Decline Award</a></td>
+                        <td><c:out value = "${row.description}"/></td>
+                        <td><fmt:formatDate type="date" value = "${row.opendate}"/></td>
+                        <td><fmt:formatDate type="date" value = "${row.closingdate}"/></td>
+                        <td><a class="waves-effect waves-light btn green" href="download?source=tender&id=${row.tenderid}">Download</a></td>
                     </tr>
                 </c:forEach>
             </tbody>

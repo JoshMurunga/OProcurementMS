@@ -11,7 +11,7 @@
 <%@page import="java.sql.Connection"%>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c"%>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/sql" prefix = "sql"%>
-<% String title = "Notifications";%>
+<% String title = "Evaluation";%>
 <jsp:include page="./includes/header.jsp"><jsp:param name="title" value="<%= title%>"/></jsp:include>
 <jsp:include page="./includes/dashnav.jsp" />
 <%
@@ -63,29 +63,21 @@
     }
 %>
 <main id="maindash">
-    <jsp:include page="./includes/supdashnav.jsp" />
-    <sql:setDataSource var = "requisition" driver = "org.postgresql.Driver"
+    <jsp:include page="./includes/comdashnav.jsp" />
+    <sql:setDataSource var = "bids" driver = "org.postgresql.Driver"
                        url = "jdbc:postgresql://localhost:5432/opms"
                        user = "postgres"  password = "1234"/>
-    <sql:query  dataSource = "${requisition}" var = "result">
-        SELECT awardtender.awardid, awardtender.message, tenders.title FROM awardtender INNER JOIN tenders ON awardtender.tenderid = tenders.tenderid INNER JOIN company ON awardtender.companyid = company.companyid INNER JOIN users ON company.userid = users.userid WHERE company.userid=<%=hiddenid%> AND awardtender.status='pending';
+    <sql:query  dataSource = "${bids}" var = "result">
+        SELECT tenders.title, tenders.description, company.companyname, tenders.tenderid, company.companyid, bids.bidid FROM tenders INNER JOIN bids ON tenders.tenderid=bids.tenderid INNER JOIN company ON company.companyid=bids.companyid INNER JOIN committee ON bids.tenderid=committee.tenderid WHERE EXISTS (SELECT 1 FROM evaluationlot WHERE committeeid = committee.committeeid) AND committee.userid=<%=hiddenid%>;
     </sql:query>
-    <center><div class="green-text" style="font-size: 20; margin-top: 8px"><b>NOTIFICATION AREA</b></div></center>
+    <center><div class="green-text" style="font-size: 20; margin-top: 8px"><b>TENDER BIDS EVALUATION</b></div></center>
     <div id="table_stats" class="container z-depth-2">
-        <% String message = (String) request.getAttribute("errMessage");
-            if (message == null) {
-                message = "";
-            } else {
-        %>
-        <script type="text/javascript"> Materialize.toast("<%=message%>", 4000);</script>
-        <% }%>
         <table class="striped dataTabularized" id="clips_table">
             <thead>
                 <tr>
                     <th>Tender Title</th>
-                    <th>Message</th>
-                    <th></th>
-                    <th></th>
+                    <th>Tender Description</th>
+                    <th>Bidder Company Name</th>
                 </tr>
             </thead>
 
@@ -93,9 +85,8 @@
                 <c:forEach var = "row" items = "${result.rows}">
                     <tr>
                         <td><c:out value = "${row.title}"/></td>
-                        <td><c:out value = "${row.message}"/></td>
-                        <td><a class="btn green" onclick="return confirmAccept()" href="<%=response.encodeURL("ControllerServlet")%>?source=accept&awardid=${row.awardid}">Accept Award</a></td>
-                        <td><a class="btn red" onclick="return confirmDecline()" href="<%=response.encodeURL("ControllerServlet")%>?source=decline&awardid=${row.awardid}">Decline Award</a></td>
+                        <td><c:out value = "${row.description}"/></td>
+                        <td><c:out value = "${row.companyname}"/></td>
                     </tr>
                 </c:forEach>
             </tbody>

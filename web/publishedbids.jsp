@@ -22,9 +22,9 @@
                        url = "jdbc:postgresql://localhost:5432/opms"
                        user = "postgres"  password = "1234"/>
     <sql:query  dataSource = "${tenders}" var = "result">
-        SELECT tenders.tenderid, tenders.title, tenders.description, tenders.opendate, tenders.closingdate, tenders.tenderdocs FROM tenders INNER JOIN evaluationlot ON tenders.tenderid = evaluationlot.tenderid WHERE evaluationlot.publish = false GROUP BY tenders.tenderid;
+        SELECT tenders.tenderid, tenders.title, tenders.description, tenders.opendate, tenders.closingdate, tenders.tenderdocs FROM tenders INNER JOIN evaluationlot ON tenders.tenderid = evaluationlot.tenderid WHERE evaluationlot.publish = true GROUP BY tenders.tenderid;
     </sql:query>
-    <center><div class="green-text" style="font-size: 20; margin-top: 8px"><b>EVALUATED TENDER BIDS MANAGEMENT</b></div></center>
+    <center><div class="green-text" style="font-size: 20; margin-top: 8px"><b>PUBLISHED TENDER BIDS</b></div></center>
     <div id="table_stats" class="container z-depth-2">
         <% String message = (String) request.getAttribute("errMessage");
             if (message == null) {
@@ -33,7 +33,7 @@
         %>
         <script type="text/javascript"> Materialize.toast("<%=message%>", 4000);</script>
         <% }%>
-        <table class="striped dataTabularized" id="clips_table">
+        <table class="striped">
             <thead>
                 <tr>
                     <th>Tender Title</th>
@@ -41,7 +41,6 @@
                     <th>Opening Date</th>
                     <th>Closing Date</th>
                     <th>Tender Documents</th>
-                    <th>View & Publish Result</th>
                 </tr>
             </thead>
 
@@ -53,7 +52,6 @@
                         <td><fmt:formatDate type="date" value = "${row.opendate}"/></td>
                         <td><fmt:formatDate type="date" value = "${row.closingdate}"/></td>
                         <td><a class="waves-effect waves-light btn green" href="download?source=tender&id=${row.tenderid}">Download</a></td>
-                        <td><a href="<%=response.encodeURL("bids.jsp")%>?id=${row.tenderid}" class="btn red">View <i class="material-icons right">send</i></a></td>
                     </tr>
                 </c:forEach>
             </tbody>

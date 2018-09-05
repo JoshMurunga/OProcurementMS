@@ -17,7 +17,7 @@
                        url = "jdbc:postgresql://localhost:5432/opms"
                        user = "postgres"  password = "1234"/>
     <sql:query  dataSource = "${tenders}" var = "result">
-        SELECT * FROM tenders;
+        SELECT * FROM tenders WHERE status='open';
     </sql:query>
     <center><div class="green-text" style="font-size: 30; margin-top: 8px"><b>TENDER ANNOUNCEMENTS</b></div></center>
     <div id="table_stats" class="container z-depth-2">

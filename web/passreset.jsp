@@ -86,7 +86,7 @@
             <div class="container">
                 <div class="container">
                     <div class="row z-depth-2" style="padding: 32px 30px 0px 30px; border: 1px solid #EEE;">
-                        <form class="col s12" name="login" method="post" action="<%=request.getContextPath()%>/ControllerServlet">
+                        <form class="col s12" name="passreset" id="passreset" method="post" action="<%=request.getContextPath()%>/ControllerServlet" onsubmit="return newPassword()">
                             <div class="row">
                                 <div class="input-field col s12">
                                     <i class="material-icons prefix">lock_outline</i>

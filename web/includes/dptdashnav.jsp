@@ -17,6 +17,12 @@
                     <li id="department_requisition">
                         <a class="waves-effect waves-teal" style="text-decoration: none;" href="<%=response.encodeURL("dptrequisitions.jsp")%>">Department Requisitions</a>
                     </li>
+                    <li id="approved_requisition">
+                        <a class="waves-effect waves-teal" style="text-decoration: none;" href="<%=response.encodeURL("appreq.jsp")%>">Approved Requisitions</a>
+                    </li>
+                    <li id="declined_requisition">
+                        <a class="waves-effect waves-teal" style="text-decoration: none;" href="<%=response.encodeURL("decreq.jsp")%>">Declined Requisitions</a>
+                    </li>
                 </ul>
             </div>
         </li>
@@ -36,7 +42,7 @@
             <div id="dash_profile_body" class="collapsible-body">
                 <ul>
                     <li id="profile_profile">
-                        <a class="waves-effect waves-teal" style="text-decoration: none;" href="#"><i class="material-icons">person_outline</i>Profile</a>
+                        <a class="waves-effect waves-teal" style="text-decoration: none;" href="<%=response.encodeURL("profile.jsp")%>"><i class="material-icons">person_outline</i>Profile</a>
                     </li>
                     <li id="profile_profile">
                         <a class="waves-effect waves-teal" style="text-decoration: none;" href="<%=response.encodeURL("LogoutServlet")%>"><i class="material-icons">exit_to_app</i>Logout</a>

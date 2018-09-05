@@ -18,5 +18,5 @@
                 <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
             </div>
         </nav>
-        </div>
-    </header>
+    </div>
+</header>

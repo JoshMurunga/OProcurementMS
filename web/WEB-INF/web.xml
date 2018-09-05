@@ -103,17 +103,22 @@
         <filter-name>ManagerFilter</filter-name>
         <url-pattern>/mandash.jsp</url-pattern>
         <url-pattern>/users.jsp</url-pattern>
+        <url-pattern>/approvedrequisitions.jsp</url-pattern>
         <url-pattern>/requisitions.jsp</url-pattern>
         <url-pattern>/tenders.jsp</url-pattern>
         <url-pattern>/addevcomm.jsp</url-pattern>
         <url-pattern>/addmember.jsp</url-pattern>
         <url-pattern>/bids.jsp</url-pattern>
         <url-pattern>/tenderbids.jsp</url-pattern>
+        <url-pattern>/publishedbids.jsp</url-pattern>
+        <url-pattern>/tenderawards.jsp</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>UserDepartmentFilter</filter-name>
         <url-pattern>/dptdash.jsp</url-pattern>
         <url-pattern>/dptrequisitions.jsp</url-pattern>
+        <url-pattern>/appreq.jsp</url-pattern>
+        <url-pattern>/decreq.jsp</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>SupplierFilter</filter-name>
@@ -122,11 +127,17 @@
         <url-pattern>/tenderoutcome.jsp</url-pattern>
         <url-pattern>/outcome.jsp</url-pattern>
         <url-pattern>/award.jsp</url-pattern>
+        <url-pattern>/accaward.jsp</url-pattern>
+        <url-pattern>/decaward.jsp</url-pattern>
+        <url-pattern>/opentenders.jsp</url-pattern>
+        <url-pattern>/closedtenders.jsp</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>CommitteeMemberFilter</filter-name>
         <url-pattern>/comdash.jsp</url-pattern>
         <url-pattern>/evaluation.jsp</url-pattern>
+        <url-pattern>/evaluated.jsp</url-pattern>
+        <url-pattern>/assignedtenders.jsp</url-pattern>
         <url-pattern>/stageone.jsp</url-pattern>
         <url-pattern>/stagetwo.jsp</url-pattern>
         <url-pattern>/stagethree.jsp</url-pattern>

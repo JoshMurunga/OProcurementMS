@@ -27,19 +27,24 @@ public class EvaluationDao {
 
         Connection conn = null;
         Statement statement = null;
+        int ex = 0;
 
         try {
             conn = DBConnection.createConnection();
             statement = conn.createStatement();
 
-            statement.executeUpdate("INSERT INTO evaluationlot (stage1,stage2,stage3,committeeid,bidid,tenderid)"
+            ex = statement.executeUpdate("INSERT INTO evaluationlot (stage1,stage2,stage3,committeeid,bidid,tenderid)"
                     + " VALUES ('" + stage1 + "','" + stage2 + "','" + stage3 + "','" + committeeid + "','" + bidid + "','" + tenderid + "')");
+
+            if (ex > 0) {
+                return "You have successfully evaluated the selected bid";
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return "failed to add";
+        return "Something went wrong, please try again";
     }
 
     public String addPublication(String publish, String company) {
@@ -59,8 +64,8 @@ public class EvaluationDao {
             if (ex > 0) {
 
                 statement.executeUpdate("INSERT INTO awardtender (tenderid,companyid,message)"
-                        + "VALUES ('"+publisher+"','"+companyid+"','Your bid was successful and have been awarded the tender')");
-                
+                        + "VALUES ('" + publisher + "','" + companyid + "','Your bid was successful and have been awarded the tender')");
+
                 return "You have successfully published the tender outcome";
             }
 
@@ -70,7 +75,7 @@ public class EvaluationDao {
 
         return "Something went wrong, please try again";
     }
-    
+
     public String acceptAward(String id) {
         awardid = id;
 
@@ -84,14 +89,17 @@ public class EvaluationDao {
 
             ex = statement.executeUpdate("UPDATE awardtender SET status='accepted' WHERE awardid ='" + awardid + "' ");
 
+            if (ex > 0) {
+                return "You have successfully accepted the tender award";
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return "failed to add";
+        return "Something went wrong, please try again";
     }
-    
+
     public String declineAward(String id) {
         awardid = id;
 
@@ -104,13 +112,16 @@ public class EvaluationDao {
             statement = conn.createStatement();
 
             ex = statement.executeUpdate("UPDATE awardtender SET status='declined' WHERE awardid ='" + awardid + "' ");
-
+            
+            if (ex > 0) {
+                return "You have successfully declined the tender award";
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return "failed to add";
+        return "Something went wrong, please try again";
     }
 
 }

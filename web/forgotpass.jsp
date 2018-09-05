@@ -18,6 +18,13 @@
                 <div class="container">
                     <div class="row z-depth-2" style="padding: 32px 30px 0px 30px; border: 1px solid #EEE;">
                         <form class="col s12" name="resetpass" method="post" action="<%=request.getContextPath()%>/EmailServlet">
+                            <% String message = (String) request.getAttribute("errMessage");
+                                if (message == null) {
+                                    message = "";
+                                } else {
+                            %>
+                            <script type="text/javascript"> Materialize.toast("<%=message%>", 4000);</script>
+                            <% } %>
                             <div class="row">
                                 <div class="input-field col s12">
                                     <i class="material-icons prefix">email</i>

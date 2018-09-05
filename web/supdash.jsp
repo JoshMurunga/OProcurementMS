@@ -68,6 +68,9 @@
 %>
 <main id="maindash">
     <jsp:include page="./includes/supdashnav.jsp" />
+    <sql:setDataSource var = "dataset" driver = "org.postgresql.Driver"
+                       url = "jdbc:postgresql://localhost:5432/opms"
+                       user = "postgres"  password = "1234"/>
     <%
         try {
             connection = DriverManager.getConnection(connectionUrl + dbName, userId, password);
@@ -97,13 +100,16 @@
                 <div class="card green z-depth-2">
                     <div class="card-content white-text">
                         <i class="material-icons medium">folder_open</i>
+                        <sql:query  dataSource = "${dataset}" var = "result">
+                            SELECT * FROM tenders WHERE status='open';
+                        </sql:query>
                         <span class="right">
-                            <p style="font-size: 40">60</p><br>
+                            <p style="font-size: 40">${result.rowCount}</p><br>
                             <p>Open Tenders!</p>
                         </span>
                     </div>
                     <div class="card-action white">
-                        <a href="#" class="green-text">View Details<i class="material-icons right">send</i></a>
+                        <a href="<%=response.encodeURL("opentenders.jsp")%>" class="green-text">View Details<i class="material-icons right">send</i></a>
                     </div>
                 </div>
             </div>
@@ -111,13 +117,16 @@
                 <div class="card red z-depth-2">
                     <div class="card-content white-text">
                         <i class="material-icons medium">folder</i>
+                        <sql:query  dataSource = "${dataset}" var = "result">
+                            SELECT * FROM tenders WHERE status='closed';
+                        </sql:query>
                         <span class="right">
-                            <p style="font-size: 40">10</p><br>
+                            <p style="font-size: 40">${result.rowCount}</p><br>
                             <p>Closed Tenders!</p>
                         </span>
                     </div>
                     <div class="card-action white">
-                        <a href="#" class="red-text">View Details<i class="material-icons right">send</i></a>
+                        <a href="<%=response.encodeURL("closedtenders.jsp")%>" class="red-text">View Details<i class="material-icons right">send</i></a>
                     </div>
                 </div>
             </div>
@@ -125,37 +134,50 @@
                 <div class="card green z-depth-2">
                     <div class="card-content white-text">
                         <i class="material-icons medium">done_all</i>
+                        <sql:query  dataSource = "${dataset}" var = "result">
+                            SELECT * FROM awardtender WHERE companyid=<%=hiddenid%> AND status='accepted';
+                        </sql:query>
                         <span class="right">
-                            <p style="font-size: 40">5</p><br>
+                            <p style="font-size: 40">${result.rowCount}</p><br>
                             <p>Granted Tenders!</p>
                         </span>
                     </div>
                     <div class="card-action white">
-                        <a href="#" class="green-text">View Details<i class="material-icons right">send</i></a>
+                        <a href="<%=response.encodeURL("accaward.jsp")%>" class="green-text">View Details<i class="material-icons right">send</i></a>
                     </div>
                 </div>
             </div>
             <div class="col s12 m6 l3">
                 <div class="card red z-depth-2">
                     <div class="card-content white-text">
-                        <i class="material-icons medium">new_releases</i>
+                        <i class="material-icons medium">announcement</i>
+                        <sql:query  dataSource = "${dataset}" var = "result">
+                            SELECT * FROM awardtender WHERE status='pending' AND companyid=<%=hiddenid%>;
+                        </sql:query>
                         <span class="right">
-                            <p style="font-size: 40">1</p><br>
-                            <p>Notification!</p>
+                            <p style="font-size: 40">${result.rowCount}</p><br>
+                            <p>Notifications!</p>
                         </span>
                     </div>
                     <div class="card-action white">
-                        <a href="award.jsp" class="red-text">View Details<i class="material-icons right">send</i></a>
+                        <a href="<%=response.encodeURL("award.jsp")%>" class="red-text">View Details<i class="material-icons right">send</i></a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <center>
+        <% String message = (String) request.getAttribute("errMessage");
+            if (message == null) {
+                message = "";
+            } else {
+        %>
+        <script type="text/javascript"> Materialize.toast("<%=message%>", 4000);</script>
+        <% }%>
         <div class="container" style="display: <%= style2%>">
             <div class="teal-text"><b>Please complete company profile in order to submit bid</b></div><br>
             <div class="container">
-                <form class="col s12" name="company" action="<%=request.getContextPath()%>/ControllerServlet" method="post" enctype="multipart/form-data">
+                <form class="col s12" name="company" id="company" action="<%=request.getContextPath()%>/ControllerServlet" method="post" enctype="multipart/form-data" onsubmit="return validateComsProfile()">
                     <div class="row">
                         <div class="input-field col s12">
                             <i class="material-icons prefix">work</i>
@@ -192,7 +214,7 @@
                         <div class="file-field input-field col s12">
                             <div class="btn red"><span>Add File</span><input type="file" name="pincertificate"></div>
                             <div class="file-path-wrapper">
-                                <input class="file-path validate" name="pincertificate" type="text" placeholder="Upload Pin Certificate Documents">
+                                <input class="file-path validate" id="pincertificate" name="pincertificate" type="text" placeholder="Upload Pin Certificate Documents">
                             </div>
                         </div>
                     </div>
@@ -205,11 +227,8 @@
             </div>
         </div>
     </center>
-    <sql:setDataSource var = "tenders" driver = "org.postgresql.Driver"
-                       url = "jdbc:postgresql://localhost:5432/opms"
-                       user = "postgres"  password = "1234"/>
-    <sql:query  dataSource = "${tenders}" var = "result">
-        SELECT * FROM tenders;
+    <sql:query  dataSource = "${dataset}" var = "result">
+        SELECT * FROM tenders WHERE status = 'open';
     </sql:query>
     <div id="table_stats" style="display: <%= style%>" class="container z-depth-2">
         <center><div class="green-text" style="font-size: 20; margin-top: 8px"><b>TENDER ANNOUNCEMENTS</b></div></center>

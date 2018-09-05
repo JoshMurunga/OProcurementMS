@@ -46,6 +46,37 @@ public class RequisitionDao {
 
         return "something went wrong, please try again";
     }
+    
+    public String reqEdit(RequisitionBean reqBean, String myreqid) {
+        String item = reqBean.getItem();
+        String category = reqBean.getCategory();
+        String units = reqBean.getUnits();
+        String unitprice = reqBean.getUnitPrice();
+        String quantity = reqBean.getQuantity();
+        String totalprice = reqBean.getTotalPrice();
+        String description = reqBean.getDescription();
+        requisitionid = myreqid;
+
+        Connection conn = null;
+        Statement statement = null;
+        int ex = 0;
+
+        try {
+            conn = DBConnection.createConnection();
+            statement = conn.createStatement();
+
+            ex = statement.executeUpdate("UPDATE requisitions set item='"+item+"', category='"+category+"', units='"+units+"', priceperunit='"+unitprice+"', quantity='"+quantity+"', totalprice='"+totalprice+"', description='"+description+"', status='pending' WHERE requisitionid='"+requisitionid+"'");
+            
+            if (ex > 0) {
+                return "You successfully edited the requisition";
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return "something went wrong, please try again";
+    }
 
     public String reqDelete(String myid) {
         requisitionid = myid;

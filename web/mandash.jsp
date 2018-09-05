@@ -26,13 +26,16 @@
                 <div class="card green z-depth-2">
                     <div class="card-content white-text">
                         <i class="material-icons medium">folder_open</i>
+                        <sql:query  dataSource = "${dataset}" var = "result">
+                            SELECT * FROM tenders WHERE status='open';
+                        </sql:query>
                         <span class="right">
-                            <p style="font-size: 40">60</p><br>
+                            <p style="font-size: 40">${result.rowCount}</p><br>
                             <p>Open Tenders!</p>
                         </span>
                     </div>
                     <div class="card-action white">
-                        <a href="#" class="green-text">View Details<i class="material-icons right">send</i></a>
+                        <a href="<%=response.encodeURL("tenders.jsp")%>" class="green-text">View Details<i class="material-icons right">send</i></a>
                     </div>
                 </div>
             </div>
@@ -40,13 +43,16 @@
                 <div class="card red z-depth-2">
                     <div class="card-content white-text">
                         <i class="material-icons medium">folder</i>
+                        <sql:query  dataSource = "${dataset}" var = "result">
+                            SELECT * FROM tenders WHERE status='closed';
+                        </sql:query>
                         <span class="right">
-                            <p style="font-size: 40">10</p><br>
+                            <p style="font-size: 40">${result.rowCount}</p><br>
                             <p>Closed Tenders!</p>
                         </span>
                     </div>
                     <div class="card-action white">
-                        <a href="#" class="red-text">View Details<i class="material-icons right">send</i></a>
+                        <a href="<%=response.encodeURL("tenders.jsp")%>" class="red-text">View Details<i class="material-icons right">send</i></a>
                     </div>
                 </div>
             </div>
@@ -55,15 +61,15 @@
                     <div class="card-content white-text">
                         <i class="material-icons medium">style</i>
                         <sql:query  dataSource = "${dataset}" var = "result">
-                            SELECT * FROM bids;
+                            SELECT tenders.tenderid, tenders.title, tenders.description, tenders.opendate, tenders.closingdate, tenders.tenderdocs FROM tenders INNER JOIN evaluationlot ON tenders.tenderid = evaluationlot.tenderid WHERE evaluationlot.publish = false GROUP BY tenders.tenderid;
                         </sql:query>
                         <span class="right">
                             <p style="font-size: 40">${result.rowCount}</p><br>
-                            <p>Bids!</p>
+                            <p>Pending Publishing!</p>
                         </span>
                     </div>
                     <div class="card-action white">
-                        <a href="#" class="green-text">View Details<i class="material-icons right">send</i></a>
+                        <a href="<%=response.encodeURL("tenderbids.jsp")%>" class="green-text">View Details<i class="material-icons right">send</i></a>
                     </div>
                 </div>
             </div>
@@ -80,7 +86,7 @@
                         </span>
                     </div>
                     <div class="card-action white">
-                        <a href="#" class="red-text">View Details<i class="material-icons right">send</i></a>
+                        <a href="<%=response.encodeURL("requisitions.jsp")%>" class="red-text">View Details<i class="material-icons right">send</i></a>
                     </div>
                 </div>
             </div>
@@ -89,11 +95,23 @@
 
     <div id="coll_stats" class="container z-depth-2">
         <div class="collection">
-            <a href="#!" class="collection-item"><span class="badge">70</span>Suppliers</a>
-            <a href="#!" class="collection-item"><span class="new badge">4</span>Active Contracts</a>
-            <a href="#!" class="collection-item"><span class="badge">50</span>Pending Purchase Orders</a>
-            <a href="#!" class="collection-item"><span class="badge">14</span>Confirmed Purchase Orders</a>
-            <a href="#!" class="collection-item"><span class="badge">2</span>Declined Purchase Orders</a>
+            <sql:query  dataSource = "${dataset}" var = "result">
+                SELECT * FROM users WHERE role='Supplier';
+            </sql:query>
+            <a href="<%=response.encodeURL("users.jsp")%>" class="collection-item"><span class="badge">${result.rowCount}</span>Suppliers</a>
+            <sql:query  dataSource = "${dataset}" var = "result">
+                SELECT * FROM awardtender;
+            </sql:query>
+            <a href="<%=response.encodeURL("tenderawards.jsp")%>" class="collection-item"><span class="badge">${result.rowCount}</span>Tender Awards</a>
+            <sql:query  dataSource = "${dataset}" var = "result">
+                SELECT tenders.tenderid, tenders.title, tenders.description, tenders.opendate, tenders.closingdate, tenders.tenderdocs FROM tenders INNER JOIN evaluationlot ON tenders.tenderid = evaluationlot.tenderid WHERE evaluationlot.publish = true GROUP BY tenders.tenderid;
+            </sql:query>
+            <a href="<%=response.encodeURL("publishedbids.jsp")%>" class="collection-item"><span class="badge">${result.rowCount}</span>Published Tender Results</a>
+            <sql:query  dataSource = "${dataset}" var = "result">
+                SELECT * FROM requisitions WHERE status='approved';
+            </sql:query>
+            <a href="<%=response.encodeURL("approvedrequisitions.jsp")%>" class="collection-item"><span class="badge">${result.rowCount}</span>Approved Requisitions</a>
+            
         </div>
     </div>
 </main>

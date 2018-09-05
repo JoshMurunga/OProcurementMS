@@ -17,6 +17,9 @@
                     <li id="module_supplier">
                         <a class="waves-effect waves-teal" style="text-decoration: none;" href="<%=response.encodeURL("requisitions.jsp")%>">Manage Requisitions</a>
                     </li>
+                    <li id="module_approved">
+                        <a class="waves-effect waves-teal" style="text-decoration: none;" href="<%=response.encodeURL("approvedrequisitions.jsp")%>">Approved Requisitions</a>
+                    </li>
                 </ul>
             </div>
         </li>
@@ -35,7 +38,13 @@
             <div id="tender_bids_body" class="collapsible-body">
                 <ul>
                     <li id="tender_bids">
-                        <a class="waves-effect waves-teal" style="text-decoration: none;" href="<%=response.encodeURL("tenderbids.jsp")%>">Manage Bids</a>
+                        <a class="waves-effect waves-teal" style="text-decoration: none;" href="<%=response.encodeURL("tenderbids.jsp")%>">Manage Evaluated Bids</a>
+                    </li>
+                    <li id="published_bids">
+                        <a class="waves-effect waves-teal" style="text-decoration: none;" href="<%=response.encodeURL("publishedbids.jsp")%>">Published Results</a>
+                    </li>
+                    <li id="tender_awards">
+                        <a class="waves-effect waves-teal" style="text-decoration: none;" href="<%=response.encodeURL("tenderawards.jsp")%>">Tender Awards</a>
                     </li>
                 </ul>
             </div>
@@ -76,7 +85,7 @@
             <div id="dash_profile_body" class="collapsible-body">
                 <ul>
                     <li id="profile_profile">
-                        <a class="waves-effect waves-teal" style="text-decoration: none;" href="#"><i class="material-icons">person_outline</i>Profile</a>
+                        <a class="waves-effect waves-teal" style="text-decoration: none;" href="<%=response.encodeURL("profile.jsp")%>"><i class="material-icons">person_outline</i>Profile</a>
                     </li>
                     <li id="profile_profile">
                         <a class="waves-effect waves-teal" style="text-decoration: none;" href="<%=response.encodeURL("LogoutServlet")%>"><i class="material-icons">exit_to_app</i>Logout</a>

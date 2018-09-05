@@ -128,70 +128,70 @@
                         <td><c:out value = "${row.contact}"/></td>
                         <td><c:out value = "${row.department}"/></td>
                         <td><c:out value = "${row.role}"/></td>
-                        <td><a id="edit_mat_button" class="modal-trigger" href="#modal6" data-userid="${row.userid}" data-firstname="${row.firstname}" data-lastname="${row.lastname}" data-email="${row.email}" data-username="${row.username}" data-contact="${row.contact}" data-department="${row.department}"><i class="material-icons ">edit</i></a></td>
-                        <td><a id="delete_mat_button" onclick="return deleter()" href="<%=response.encodeURL("ControllerServlet")%>?source=deluser&userid=${row.userid}"><i class="material-icons">delete</i></a></td>
+                        <td><a id="edit_mat_button" class="modal-trigger tooltipped" data-position="bottom" data-tooltip="Edit" href="#modal6" data-userid="${row.userid}" data-firstname="${row.firstname}" data-lastname="${row.lastname}" data-email="${row.email}" data-username="${row.username}" data-contact="${row.contact}" data-department="${row.department}"><i class="material-icons ">edit</i></a></td>
+                        <td><a id="delete_mat_button" class="tooltipped" data-position="bottom" data-tooltip="Remove" onclick="return deleter()" href="<%=response.encodeURL("ControllerServlet")%>?source=deluser&userid=${row.userid}"><i class="material-icons">delete</i></a></td>
                     </tr>
-                <div id="modal6" class="modal modal-fixed-footer">
-                    <div class="modal-content">
-                        <h5>Edit User Details</h5>
-                        <form class="col s12" method="POST" action="<%=response.encodeURL("ControllerServlet")%>" id="edit" name="edit" onsubmit="return newValidator()">
-                            <div class="row">
-                                <div class="input-field col s6">
-                                    <i class="material-icons prefix">person_outline</i>
-                                    <input id="firstName" name="firstname" type="text" placeholder="name" class="validate">
-                                    <label for="firstName">First Name</label>
-                                </div>
-                                <div class="input-field col s6">
-                                    <input id="lastName" name="lastname" type="text" placeholder="name" class="validate">
-                                    <label for="lastName">Last Name</label>
-                                </div>
-                            </div>
-                            <input type="hidden" name="source" value= "editUserDetails">
-                            <input type="hidden" name="userid" >
-                            <div class="row">
-                                <div class="input-field col s6">
-                                    <i class="material-icons prefix">email</i>
-                                    <input id="email" name="email" type="email" placeholder="name" class="validate">
-                                    <label for="email">Email</label>
-                                </div>
-                                <div class="input-field col s6">
-                                    <i class="material-icons prefix">account_circle</i>
-                                    <input id="username" name="username" type="text" placeholder="name" class="validate">
-                                    <label for="username">Username</label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="input-field col s6">
-                                    <i class="material-icons prefix">work</i>
-                                    <input id="department" name="department" type="text" placeholder="name" class="validate">
-                                    <label for="department">Department</label>
-                                </div>
-                                <div class="input-field col s6">
-                                    <i class="material-icons prefix">phone</i>
-                                    <input id="contact" name="contact" type="text" placeholder="name" class="validate">
-                                    <label for="contact">Contact</label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="input-field col s6">
-                                    <select id="sucu_select">
-                                        <option value="" disabled selected>Select Role</option>
-                                        <option value="CommitteeMember">Committee Member</option>
-                                        <option value="UserDepartment">User Department</option>
-                                    </select>
-                                    <input type="hidden" name="role" id="sucu" />
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" form="edit" class="waves-effect waves-teal green btn" name='editdetails' onclick="return newValidator()">Submit</button>
-                        <a class="modal-action modal-close waves-effect waves-teal red btn">close</a>
-                    </div>
-                </div
-            </c:forEach>
+                </c:forEach>
             </tbody>
         </table>
+    </div>
+    <div id="modal6" class="modal modal-fixed-footer">
+        <div class="modal-content">
+            <h5>Edit User Details</h5>
+            <form class="col s12" method="POST" action="<%=response.encodeURL("ControllerServlet")%>" id="editUser" name="editUser" onsubmit="return validateUser()">
+                <div class="row">
+                    <div class="input-field col s6">
+                        <i class="material-icons prefix">person_outline</i>
+                        <input id="firstname" name="firstname" type="text" placeholder="name" class="validate">
+                        <label for="firstname">First Name</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="lastname" name="lastname" type="text" placeholder="name" class="validate">
+                        <label for="lastname">Last Name</label>
+                    </div>
+                </div>
+                <input type="hidden" name="source" value= "editUserDetails">
+                <input type="hidden" name="userid" >
+                <div class="row">
+                    <div class="input-field col s6">
+                        <i class="material-icons prefix">email</i>
+                        <input id="email" name="email" type="email" placeholder="name" class="validate">
+                        <label for="email">Email</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <i class="material-icons prefix">account_circle</i>
+                        <input id="username" name="username" type="text" placeholder="name" class="validate">
+                        <label for="username">Username</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s6">
+                        <i class="material-icons prefix">work</i>
+                        <input id="department" name="department" type="text" placeholder="name" class="validate">
+                        <label for="department">Department</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <i class="material-icons prefix">phone</i>
+                        <input id="contact" name="contact" type="text" placeholder="name" class="validate">
+                        <label for="contact">Contact</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s6">
+                        <select id="sucu_select">
+                            <option value="" disabled selected>Select Role</option>
+                            <option value="CommitteeMember">Committee Member</option>
+                            <option value="UserDepartment">User Department</option>
+                        </select>
+                        <input type="hidden" name="role" id="sucu" />
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" form="editUser" class="waves-effect waves-teal green btn" name='editdetails' onclick="return validateUser()">Submit</button>
+            <a class="modal-action modal-close waves-effect waves-teal red btn">close</a>
+        </div>
     </div>
 </main>
 

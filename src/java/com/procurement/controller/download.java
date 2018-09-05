@@ -17,6 +17,7 @@ import java.sql.Statement;
 import java.io.File;
 import com.util.database.DBConnection;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.OutputStream;
 
 /**
@@ -164,7 +165,7 @@ public class download extends HttpServlet {
                         out.flush();
 
                     }
-                    
+
                 } else if (source2.equals("pin")) {
 
                     conn = DBConnection.createConnection();
@@ -197,7 +198,7 @@ public class download extends HttpServlet {
                     }
 
                 } else if (source2.equals("fin")) {
-                    
+
                     conn = DBConnection.createConnection();
                     statement = conn.createStatement();
                     resultSet = statement.executeQuery("SELECT financialhistory FROM bids WHERE bidid='" + id + "'");
@@ -226,10 +227,10 @@ public class download extends HttpServlet {
                         out.flush();
 
                     }
-                    
-                } 
 
-            } else if(source.equals("evaluator")){
+                }
+
+            } else if (source.equals("evaluator")) {
                 String tenderid = request.getParameter("tenderid");
                 String userid = request.getParameter("userid");
                 System.out.println(tenderid);

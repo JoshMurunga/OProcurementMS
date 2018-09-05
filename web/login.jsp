@@ -12,11 +12,11 @@
 <main>
     <br>
     <center>
-        <div class="green-text"><b>Login to your account</b></div><br>
+        <div class="green-text" style="font-size: 20; margin-top: 8px"><b>LOGIN TO YOUR ACCOUNT</b></div><br>
         <div class="container">
             <div class="container">
                 <div class="container">
-                    <div class="row z-depth-2" style="padding: 32px 30px 0px 30px; border: 1px solid #EEE;">
+                    <div class="row z-depth-2 white" style="padding: 32px 30px 0px 30px; border: 1px solid #EEE;">
                         <form class="col s12" name="login" method="post" action="<%=request.getContextPath()%>/ControllerServlet">
                             <% String message = (String) request.getAttribute("errMessage");
                                 if (message == null) {

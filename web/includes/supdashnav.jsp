@@ -15,11 +15,32 @@
             <div id="dash_module_body" class="collapsible-body">
                 <ul>
                     <li id="module_supplier">
-                        <a class="waves-effect waves-teal" style="text-decoration: none;" href="#">Submit Bid</a>
+                        <a class="waves-effect waves-teal" style="text-decoration: none;" href="<%=response.encodeURL("opentenders.jsp")%>">Open Tenders</a>
                     </li>
-
+                    <li id="module_closed">
+                        <a class="waves-effect waves-teal" style="text-decoration: none;" href="<%=response.encodeURL("closedtenders.jsp")%>">Closed Tenders</a>
+                    </li>
                     <li id="module_employee">
                         <a class="waves-effect waves-teal" style="text-decoration: none;" href="<%=response.encodeURL("tenderoutcome.jsp")%>">Tender Bid Outcome</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        
+        <li id="dash_module">
+            <div id="module_notification_header" class="collapsible-header waves-effect waves-teal green-text"><i class="material-icons green-text">assignment</i><b>Tender Awards</b></div>
+            <div id="module_notification_body" class="collapsible-body">
+                <ul>
+                    <li id="module_notification">
+                        <a class="waves-effect waves-teal" style="text-decoration: none;" href="<%=response.encodeURL("award.jsp")%>">Awards Notification Area</a>
+                    </li>
+
+                    <li id="module_accept">
+                        <a class="waves-effect waves-teal" style="text-decoration: none;" href="<%=response.encodeURL("accaward.jsp")%>">Accepted Awards</a>
+                    </li>
+                    
+                    <li id="module_decline">
+                        <a class="waves-effect waves-teal" style="text-decoration: none;" href="<%=response.encodeURL("decaward.jsp")%>">Declined Awards</a>
                     </li>
                 </ul>
             </div>
@@ -41,7 +62,7 @@
             <div id="dash_profile_body" class="collapsible-body">
                 <ul>
                     <li id="profile_profile">
-                        <a class="waves-effect waves-teal green-text" style="text-decoration: none;" href="#"><i class="material-icons green-text">person_outline</i>Profile</a>
+                        <a class="waves-effect waves-teal green-text" style="text-decoration: none;" href="<%=response.encodeURL("profile.jsp")%>"><i class="material-icons green-text">person_outline</i>Profile</a>
                     </li>
                     <li id="profile_profile">
                         <a class="waves-effect waves-teal green-text" style="text-decoration: none;" href="<%=response.encodeURL("LogoutServlet")%>"><i class="material-icons green-text">exit_to_app</i>Logout</a>

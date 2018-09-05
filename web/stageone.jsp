@@ -35,7 +35,7 @@
         <div>
             <div class="teal-text" style="font-size: 28; margin-top: 8px">Stage One Evaluation</div>
             <div class="container" style="padding: 32px 30px 0px 30px; border: 1px solid #EEE; background: whitesmoke">
-                <form class="col s12" name="company" action="<%=response.encodeURL("stagetwo.jsp")%>" method="get" enctype="multipart/form-data">
+                <form class="col s12" name="stageone" id="stageone" action="<%=response.encodeURL("stagetwo.jsp")%>" method="get" enctype="multipart/form-data" onsubmit="return validateStageOne()">
                     <table>
                         <tr>
                             <td class="teal-text"><b>Company Name</b></td>
