@@ -96,6 +96,10 @@
     <div id="coll_stats" class="container z-depth-2">
         <div class="collection">
             <sql:query  dataSource = "${dataset}" var = "result">
+                select * from evaluationlot inner join bids on evaluationlot.bidid=bids.bidid inner join company on bids.companyid=company.companyid group by evaluationlot.evlotid, bids.bidid, company.companyid;
+            </sql:query>
+            <a href="<%=response.encodeURL("bids.jsp")%>" class="collection-item"><span class="badge">${result.rowCount}</span>Unevaluated Bids</a>
+            <sql:query  dataSource = "${dataset}" var = "result">
                 SELECT * FROM users WHERE role='Supplier';
             </sql:query>
             <a href="<%=response.encodeURL("users.jsp")%>" class="collection-item"><span class="badge">${result.rowCount}</span>Suppliers</a>
