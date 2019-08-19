@@ -37,6 +37,9 @@
             <div id="tender_bids_header" class="collapsible-header waves-effect waves-teal green-text"><i class="material-icons green-text">style</i><b>Tender Bids</b></div>
             <div id="tender_bids_body" class="collapsible-body">
                 <ul>
+                    <li id="unevaluated_bids">
+                        <a class="waves-effect waves-teal" style="text-decoration: none;" href="<%=response.encodeURL("bids.jsp")%>">Unevaluated Bids</a>
+                    </li>
                     <li id="tender_bids">
                         <a class="waves-effect waves-teal" style="text-decoration: none;" href="<%=response.encodeURL("tenderbids.jsp")%>">Manage Evaluated Bids</a>
                     </li>
