@@ -88,6 +88,11 @@
             $('#tender_manage_header').addClass('active');
             $('#tender_manage_body').css('display', 'block');
         }
+        
+        if ($('#unevaluated_bids').hasClass('active')) {
+            $('#tender_bids_header').addClass('active');
+            $('#tender_bids_body').css('display', 'block');
+        }
 
         if ($('#tender_bids').hasClass('active')) {
             $('#tender_bids_header').addClass('active');
