@@ -24,11 +24,11 @@ In order for the system to function as intended, you need to setup a cron job on
 
 ### More Tweaks:
 In the source directory under ControllerServlet, you may require to edit some lines of code to suit your environment. This in particular will be to facilitate the access of documents, either to store or retrieve from the server. The following lines of code contain the full path to your file storage directory in which you should tweak to your own desired path:
-a. line 267.
-b. line 302.
-c. line 335.
-d. line 369.
-e. line 402.
-f. line 433.
+1. line 267.
+2. line 302.
+3. line 335.
+4. line 369.
+5. line 402.
+6. line 433.
 
 Within the directory you have specified in the full path above, you may be required to create more directories as specified in the lines of code 42-45.
